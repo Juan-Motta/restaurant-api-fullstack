@@ -1,0 +1,17 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`TableSellerItem.vue > should render correctly 1`] = `
+"<div data-v-acdd6653="" class="bg-white/50 py-8 px-5 border-shadow rounded-xl">
+  <table data-v-acdd6653="" class="min-w-full">
+    <thead data-v-acdd6653="">
+      <tr data-v-acdd6653="" class="text-left">
+        <th data-v-acdd6653="" class="pt-2 pb-6 px-4"></th>
+        <th data-v-acdd6653="" class="pt-2 pb-6 px-4"></th>
+        <th data-v-acdd6653="" class="pt-2 pb-6 px-4"></th>
+        <th data-v-acdd6653="" class="pt-2 pb-6 px-4"></th>
+      </tr>
+    </thead>
+    <tbody data-v-acdd6653=""></tbody>
+  </table>
+</div>"
+`;

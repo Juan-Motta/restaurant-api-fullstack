@@ -1,4 +1,4 @@
-import * as http from 'http'
+import { HttpRequest, HttpResponse } from '../../../../app'
 
 import { getUserService, getAuthService } from '../../../dependencies/services'
 import { db } from '../../output/database'
@@ -6,12 +6,12 @@ import { type CreateUserInput } from '../../../../domain/entities/users'
 import Logger from '../../../config/logger'
 
 export async function loginController(
-    req: http.IncomingMessage,
-    res: http.ServerResponse,
-    body: { email: string; password: string }
+    req: HttpRequest,
+    res: HttpResponse,
 ) {
     Logger.info('Logging in user')
     const client = await db.connect()
+    const body  = req.body as { email: string; password: string }
     const service = await getAuthService(client)
     const response = await service.login(body.email, body.password)
     client.release()
@@ -20,12 +20,12 @@ export async function loginController(
 }
 
 export async function registerUserController(
-    req: http.IncomingMessage,
-    res: http.ServerResponse,
-    body: CreateUserInput
+    req: HttpRequest,
+    res: HttpResponse,
 ) {
     Logger.info('Registering user')
     const client = await db.connect()
+    const body  = req.body as CreateUserInput
     const service = await getUserService(client)
     const response = await service.createUser(
         body.name,

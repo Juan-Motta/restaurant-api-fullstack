@@ -8,6 +8,5 @@ export interface Route<T> {
     handler: (
         req: http.IncomingMessage,
         res: http.ServerResponse,
-        body: T
     ) => void
 }

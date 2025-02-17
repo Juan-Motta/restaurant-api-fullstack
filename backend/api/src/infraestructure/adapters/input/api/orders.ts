@@ -28,7 +28,6 @@ export async function listAllOrdersController(
 ) {
     Logger.info('Listing all orders')
     const client = await db.connect()
-
     const authService = await getAuthService(client)
     await authService.verifyHeader(req)
 

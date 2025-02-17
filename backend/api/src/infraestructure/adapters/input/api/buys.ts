@@ -1,4 +1,4 @@
-import * as http from 'http'
+import { HttpResponse, HttpRequest } from '../../../../app'
 
 import { db } from '../../output/database'
 import Logger from '../../../config/logger'
@@ -6,8 +6,8 @@ import { getAuthService } from '../../../dependencies/services'
 import { getBuysService } from '../../../dependencies/services'
 
 export async function listAllBuysController(
-    req: http.IncomingMessage,
-    res: http.ServerResponse
+    req: HttpRequest,
+    res: HttpResponse
 ) {
     Logger.info('Listing all buys')
     const client = await db.connect()

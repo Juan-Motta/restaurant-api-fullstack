@@ -1,4 +1,4 @@
-import * as http from 'http'
+import { HttpResponse, HttpRequest } from '../../../../app'
 
 import { db } from '../../output/database'
 import Logger from '../../../config/logger'
@@ -8,8 +8,8 @@ import {
 } from '../../../dependencies/services'
 
 export async function listAllIngredients(
-    req: http.IncomingMessage,
-    res: http.ServerResponse
+    req: HttpRequest,
+    res: HttpResponse
 ) {
     Logger.info('Getting all ingredients')
     const client = await db.connect()

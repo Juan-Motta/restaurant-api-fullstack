@@ -5,6 +5,8 @@ import { Events } from "../../../../domain/constants/events";
 import { getKitchenService } from "../../../dependencies/services";
 import { db } from '../../output/database'
 import { CreateOrderMessage } from "../../../../domain/entities/rabbitmq";
+import { getEventsLogsRepository } from "../../../dependencies/repositories";
+import { EventLogsState } from "../../../../domain/constants/logsStates";
 
 export class RabbitMQListener {
 
@@ -12,8 +14,15 @@ export class RabbitMQListener {
         if (message.event === Events.PREPARE_ORDER) {
             Logger.info(`Preparing order ${message.data.orderId}`);
             const client = await db.connect()
-            const storageService = await getKitchenService(client);
-            storageService.prepareOrder(message.data.orderId);
+            const eventsLogsRepository = await getEventsLogsRepository(client);
+            try {
+              await eventsLogsRepository.create(Events.PREPARE_ORDER, message, EventLogsState.RECEIVED, null);
+              const storageService = await getKitchenService(client);
+              storageService.prepareOrder(message.data.orderId);
+            } catch (error) {
+              const errorMessage = `Error preparing order: ${error}`;
+              await eventsLogsRepository.create(Events.PREPARE_ORDER, message, EventLogsState.RECEIVED_FAILED, errorMessage);
+            }
             client.release();
         }
     }

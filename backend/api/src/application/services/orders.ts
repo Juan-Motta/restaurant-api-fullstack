@@ -47,30 +47,26 @@ export class OrdersService {
         orderId: number,
         orderStatus: OrderStatus
     ) {
+        const message = {
+            event: Events.CREATE_ORDER,
+            data: { orderId, orderStatus }
+        }
         try {
-            await this.rabbitmqProducer.publish(Queues.STORE_QUEUE, {
-                event: Events.CREATE_ORDER,
-                data: { orderId, orderStatus }
-            })
+            await this.rabbitmqProducer.publish(Queues.STORE_QUEUE, message)
             await this.eventsLogsRepository.create(
                 Events.CREATE_ORDER,
-                {
-                    event: Events.CREATE_ORDER,
-                    data: { orderId, orderStatus }
-                },
+                message,
                 EventLogsState.CREATED,
                 null
             )
         } catch (error) {
-            Logger.error(`Error sending create order event: ${error}`)
+            const errorMessage = `Error sending create order event: ${error}`
+            Logger.error(errorMessage)
             await this.eventsLogsRepository.create(
                 Events.CREATE_ORDER,
-                {
-                    event: Events.CREATE_ORDER,
-                    data: { orderId, orderStatus }
-                },
+                message,
                 EventLogsState.CREATED_FAILED,
-                `Error sending create order event: ${error}`
+                errorMessage
             )
         }
     }

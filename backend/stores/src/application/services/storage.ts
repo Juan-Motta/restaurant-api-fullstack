@@ -62,14 +62,14 @@ export class StorageService {
     }
 
     public async notifyToKitchen(orderId: number) {
+        const message = {event: Events.PREPARE_ORDER, data: {orderId: orderId, orderStatus: OrderStatus.IN_KITCHEN}}
         try {
-            const message = {event: Events.PREPARE_ORDER, data: {orderId: orderId, orderStatus: OrderStatus.IN_KITCHEN}}
             await this.rabbitMQProducer.publish(Queues.KITCHEN_QUEUE, message);
             await this.eventsLogsRepository.create(Events.PREPARE_ORDER, message, EventLogsState.CREATED, null);
         } catch (error) {
             const errorMessage = `Error notifying to kitchen: ${error}`
             Logger.error(errorMessage);
-            await this.eventsLogsRepository.create(Events.PREPARE_ORDER, {orderId: orderId}, EventLogsState.CREATED_FAILED, errorMessage);
+            await this.eventsLogsRepository.create(Events.PREPARE_ORDER, message, EventLogsState.CREATED_FAILED, errorMessage);
         }
     }
 

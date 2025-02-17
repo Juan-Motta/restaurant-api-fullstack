@@ -12,7 +12,8 @@ import {
     getBuysRepository,
     getOrderRepository,
     getRecipeRepository,
-    getStorageRespository
+    getStorageRespository,
+    getEventsLogsRepository
 } from './repositories'
 
 export async function getUserService(client: PoolClient) {
@@ -32,10 +33,12 @@ export async function getOrderService(client: PoolClient) {
     const orderRepository = await getOrderRepository(client)
     const recipeRepository = await getRecipeRepository(client)
     const rabbitmqProducer = await getRabbitMQProducer()
+    const eventsLogsRepository = await getEventsLogsRepository(client)
     return new OrdersService(
         orderRepository,
         recipeRepository,
-        rabbitmqProducer
+        rabbitmqProducer,
+        eventsLogsRepository
     )
 }
 

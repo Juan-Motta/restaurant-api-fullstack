@@ -1,4 +1,3 @@
-import { Body } from './commons'
 import { Recipe } from './recipes'
 
 export interface Order {

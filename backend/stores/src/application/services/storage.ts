@@ -72,7 +72,6 @@ export class StorageService {
         }
         await this.notifyToKitchen(order.id as number);
         await this.orderRepository.updateStatus(orderId, OrderStatus.IN_KITCHEN);
-        await this.storageRepository.removeIngredientsFromStorage(order.recipe.id as number);
     }
 
     public async getAllIngredients() {

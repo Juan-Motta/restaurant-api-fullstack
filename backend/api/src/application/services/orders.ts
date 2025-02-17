@@ -5,20 +5,25 @@ import { IRabbitMQProducer } from '../../domain/adapters/rabbitmq'
 import { Events } from '../../domain/constants/events'
 import { Queues } from '../../domain/constants/queues'
 import Logger from '../../infraestructure/config/logger'
+import { IEventsLogsRepository } from '../../domain/repositories/eventsLogs'
+import { EventLogsState } from '../../domain/constants/logsStates'
 
 export class OrdersService {
     private orderRepository: IOrderRepository
     private recipeRepository: IRecipeRepository
     private rabbitmqProducer: IRabbitMQProducer
+    private eventsLogsRepository: IEventsLogsRepository
 
     constructor(
         orderRepository: IOrderRepository,
         recipeRepository: IRecipeRepository,
-        rabbitmqProducer: IRabbitMQProducer
+        rabbitmqProducer: IRabbitMQProducer,
+        eventsLogsRepository: IEventsLogsRepository
     ) {
         this.orderRepository = orderRepository
         this.recipeRepository = recipeRepository
         this.rabbitmqProducer = rabbitmqProducer
+        this.eventsLogsRepository = eventsLogsRepository
     }
 
     public async createOrder() {
@@ -47,8 +52,26 @@ export class OrdersService {
                 event: Events.CREATE_ORDER,
                 data: { orderId, orderStatus }
             })
+            await this.eventsLogsRepository.create(
+                Events.CREATE_ORDER,
+                {
+                    event: Events.CREATE_ORDER,
+                    data: { orderId, orderStatus }
+                },
+                EventLogsState.CREATED,
+                null
+            )
         } catch (error) {
             Logger.error(`Error sending create order event: ${error}`)
+            await this.eventsLogsRepository.create(
+                Events.CREATE_ORDER,
+                {
+                    event: Events.CREATE_ORDER,
+                    data: { orderId, orderStatus }
+                },
+                EventLogsState.CREATED_FAILED,
+                `Error sending create order event: ${error}`
+            )
         }
     }
 

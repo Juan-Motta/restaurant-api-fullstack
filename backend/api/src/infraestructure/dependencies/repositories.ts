@@ -10,6 +10,8 @@ import { IBuysRepository } from '../../domain/repositories/buys'
 import { BuysRepository } from '../adapters/output/repository/buys'
 import { IStorageRepository } from '../../domain/repositories/storages'
 import { StorageRepository } from '../adapters/output/repository/storages'
+import { IEventsLogsRepository } from '../../domain/repositories/eventsLogs'
+import { EventsLogsRepository } from '../adapters/output/repository/eventsLogs'
 
 export async function getUserRepository(
     client: PoolClient
@@ -39,4 +41,10 @@ export async function getStorageRespository(
     client: PoolClient
 ): Promise<IStorageRepository> {
     return new StorageRepository(client)
+}
+
+export async function getEventsLogsRepository(
+    client: PoolClient
+): Promise<IEventsLogsRepository> {
+    return new EventsLogsRepository(client)
 }

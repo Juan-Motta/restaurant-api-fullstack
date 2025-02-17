@@ -1,0 +1,6 @@
+export enum EventLogsState {
+    CREATED = 'CREATED',
+    CREATED_FAILED = 'CREATED_FAILED',
+    RECEIVED = 'RECEIVED',
+    RECEIVED_FAILED = 'RECEIVED_FAILED',
+}

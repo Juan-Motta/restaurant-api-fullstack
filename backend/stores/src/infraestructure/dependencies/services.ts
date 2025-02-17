@@ -1,6 +1,4 @@
 import { PoolClient } from 'pg'
-import { AuthService } from '../../application/services/auth'
-import { JwtManager } from '../utils/jwt'
 import { HttpAdapter } from '../adapters/output/http/request'
 import { RecipeRepository } from '../adapters/output/repository/recipes'
 import { BuysRepository } from '../adapters/output/repository/buys'
@@ -18,10 +16,4 @@ export async function getStorageService(client: PoolClient) {
     const storageRepository = new StorageRepository(client)
     const rabbitMQProducer = new RabbitMQProducer()
     return new StorageService(httpAdapter, recipeRepository, buysRepository, orderRepository, storageRepository, rabbitMQProducer)
-}
-
-
-export async function getAuthService(req: any) {
-    const jwtManager = new JwtManager()
-    return new AuthService(jwtManager)
 }

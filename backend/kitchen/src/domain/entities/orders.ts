@@ -11,5 +11,4 @@ export enum OrderStatus {
     PREPARING = 'PREPARING',
     IN_KITCHEN = 'IN_KITCHEN',
     FINISHED = 'FINISHED'
-,
 }

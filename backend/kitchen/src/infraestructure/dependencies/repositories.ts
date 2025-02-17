@@ -13,7 +13,9 @@ export async function getOrderRepository(
     return new OrderRepository(client)
 }
 
-export async function getSorageRepository(client: PoolClient): Promise<IStorageRepository> {
+export async function getSorageRepository(
+    client: PoolClient
+): Promise<IStorageRepository> {
     return new StorageRepository(client)
 }
 

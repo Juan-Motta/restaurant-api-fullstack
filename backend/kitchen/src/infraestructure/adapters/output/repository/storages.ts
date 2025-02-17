@@ -8,7 +8,10 @@ export class StorageRepository implements IStorageRepository {
         this.client = client
     }
 
-    async updateIngredientQuantity(ingredientId: number, quantity: number): Promise<void> {
+    async updateIngredientQuantity(
+        ingredientId: number,
+        quantity: number
+    ): Promise<void> {
         await this.client.query(
             'UPDATE storage SET quantity = quantity + $1 WHERE ingredient_id = $2;',
             [quantity, ingredientId]

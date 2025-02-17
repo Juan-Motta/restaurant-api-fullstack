@@ -11,7 +11,7 @@ export class BuysRepository implements IBuysRepository {
     async create(ingredientId: number, quantity: number): Promise<void> {
         await this.client.query(
             'INSERT INTO buys (ingredient_id, quantity) VALUES ($1, $2);',
-            [quantity, ingredientId]
+            [ingredientId, quantity]
         )
     }
 }

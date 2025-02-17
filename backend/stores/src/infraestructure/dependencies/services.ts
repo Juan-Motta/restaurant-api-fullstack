@@ -1,19 +1,16 @@
 import { PoolClient } from 'pg'
-import { HttpAdapter } from '../adapters/output/http/request'
-import { RecipeRepository } from '../adapters/output/repository/recipes'
-import { BuysRepository } from '../adapters/output/repository/buys'
-import { OrderRepository } from '../adapters/output/repository/orders'
-import { StorageRepository } from '../adapters/output/repository/storages'
-import { RabbitMQProducer } from '../adapters/output/rabbitmq/producer'
 import { StorageService } from '../../application/services/storage'
+import { getHttpAdapter, getRabbitMQProducer } from './utils'
+import { getRecipeRepository, getOrderRepository, getEventsLogsRepository, getBuysRepository, getStorageRespository } from './repositories'
 
 
 export async function getStorageService(client: PoolClient) {
-    const httpAdapter = new HttpAdapter()
-    const recipeRepository = new RecipeRepository(client)
-    const buysRepository = new BuysRepository(client)
-    const orderRepository = new OrderRepository(client)
-    const storageRepository = new StorageRepository(client)
-    const rabbitMQProducer = new RabbitMQProducer()
-    return new StorageService(httpAdapter, recipeRepository, buysRepository, orderRepository, storageRepository, rabbitMQProducer)
+    const httpAdapter = await getHttpAdapter()
+    const recipeRepository = await getRecipeRepository(client)
+    const buysRepository = await getBuysRepository(client)
+    const orderRepository = await getOrderRepository(client)
+    const storageRepository = await getStorageRespository(client)
+    const rabbitMQProducer = await getRabbitMQProducer()
+    const eventsLogsRepository = await getEventsLogsRepository(client)
+    return new StorageService(httpAdapter, recipeRepository, buysRepository, orderRepository, storageRepository, rabbitMQProducer, eventsLogsRepository)
 }

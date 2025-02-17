@@ -10,6 +10,8 @@ import { Queues } from "../../domain/constants/queues";
 import { Events } from "../../domain/constants/events";
 import { OrderStatus } from "../../domain/entities/orders";
 import Logger from "../../infraestructure/config/logger";
+import { IEventsLogsRepository } from "../../domain/repositories/eventsLogs";
+import { EventLogsState } from "../../domain/constants/logsStates";
 
 export class StorageService {
     private httpAdapter: IHttpAdapter;
@@ -18,14 +20,16 @@ export class StorageService {
     private orderRepository: IOrderRepository;
     private storageRepository: IStorageRepository;
     private rabbitMQProducer: IRabbitMQProducer;
+    private eventsLogsRepository: IEventsLogsRepository;
 
-    constructor(httpAdapter: IHttpAdapter, recipeRepository: IRecipeRepository, buysRepository: IBuysRepository, orderRepository: IOrderRepository, storageRepository: IStorageRepository, rabbitMQProducer: IRabbitMQProducer) {
+    constructor(httpAdapter: IHttpAdapter, recipeRepository: IRecipeRepository, buysRepository: IBuysRepository, orderRepository: IOrderRepository, storageRepository: IStorageRepository, rabbitMQProducer: IRabbitMQProducer, eventsLogsRepository: IEventsLogsRepository) {
         this.httpAdapter = httpAdapter;
         this.recipeRepository = recipeRepository;
         this.buysRepository = buysRepository;
         this.orderRepository = orderRepository;
         this.storageRepository = storageRepository;
         this.rabbitMQProducer = rabbitMQProducer;
+        this.eventsLogsRepository = eventsLogsRepository;
     }
 
     public async buyIngredient(ingredientId: number, ingredientName: string, quantityNeeded: number) {
@@ -58,7 +62,15 @@ export class StorageService {
     }
 
     public async notifyToKitchen(orderId: number) {
-        await this.rabbitMQProducer.publish(Queues.KITCHEN_QUEUE, {data: {orderId: orderId, orderStatus: OrderStatus.IN_KITCHEN}, event: Events.PREPARE_ORDER});
+        try {
+            const message = {event: Events.PREPARE_ORDER, data: {orderId: orderId, orderStatus: OrderStatus.IN_KITCHEN}}
+            await this.rabbitMQProducer.publish(Queues.KITCHEN_QUEUE, message);
+            await this.eventsLogsRepository.create(Events.PREPARE_ORDER, message, EventLogsState.CREATED, null);
+        } catch (error) {
+            const errorMessage = `Error notifying to kitchen: ${error}`
+            Logger.error(errorMessage);
+            await this.eventsLogsRepository.create(Events.PREPARE_ORDER, {orderId: orderId}, EventLogsState.CREATED_FAILED, errorMessage);
+        }
     }
 
     public async prepareIngrtedients(orderId: number) {

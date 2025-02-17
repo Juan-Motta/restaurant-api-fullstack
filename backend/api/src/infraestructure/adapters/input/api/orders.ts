@@ -3,6 +3,10 @@ import Logger from '../../../config/logger'
 import { getOrderService, getAuthService } from '../../../dependencies/services'
 
 import { HttpRequest, HttpResponse } from '../../../../app'
+import {
+    OrderFilterValidator,
+    OrderFilter
+} from '../../../../domain/filters/orders'
 
 export async function createOrderController(
     req: HttpRequest,
@@ -31,8 +35,10 @@ export async function listAllOrdersController(
     const authService = await getAuthService(client)
     await authService.verifyHeader(req)
 
+    const filters = OrderFilterValidator.validate(req.query)
+
     const orderService = await getOrderService(client)
-    const response = await orderService.listAllOrders()
+    const response = await orderService.listAllOrders(filters)
 
     client.release()
     res.statusCode = 200
@@ -40,7 +46,7 @@ export async function listAllOrdersController(
 }
 
 export async function getOrderController(req: HttpRequest, res: HttpResponse) {
-    Logger.info('Listing all orders')
+    Logger.info('Get order')
     const client = await db.connect()
 
     const authService = await getAuthService(client)

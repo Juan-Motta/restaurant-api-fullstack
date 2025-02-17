@@ -1,3 +1,4 @@
+import { IngredientFilter } from '../../domain/filters/ingredients'
 import { IStorageRepository } from '../../domain/repositories/storages'
 
 export class StorageService {
@@ -7,7 +8,9 @@ export class StorageService {
         this.storageRepository = storageRepository
     }
 
-    public async getAllIngredients() {
-        return this.storageRepository.getAllIngredients()
+    public async getAllIngredients(filters: IngredientFilter) {
+        const data = await this.storageRepository.getAllIngredients(filters)
+        const total = await this.storageRepository.countAll()
+        return { data, page: filters.page, perPage: filters.perPage, total }
     }
 }

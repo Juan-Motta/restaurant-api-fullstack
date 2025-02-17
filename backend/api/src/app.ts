@@ -1,5 +1,5 @@
 import * as http from 'http'
-import { URL } from 'url';
+import { URL } from 'url'
 import { migrateAll } from './infraestructure/adapters/output/database/migrations'
 import Logger from './infraestructure/config/logger'
 import { Route } from './domain/entities/commons'
@@ -20,110 +20,110 @@ export class HttpServer {
     constructor() {
         this.server = http.createServer(
             (req: HttpRequest, res: http.ServerResponse) => {
-                const parsedUrl = new URL(req.url || '', `http://${req.headers.host}`);
-                req.query = Object.fromEntries(parsedUrl.searchParams.entries());
+                const parsedUrl = new URL(
+                    req.url || '',
+                    `http://${req.headers.host}`
+                )
+                req.query = Object.fromEntries(parsedUrl.searchParams.entries())
 
                 const route = this.routes.find((r) => {
-                    const match = this.matchRoute(r.path, parsedUrl.pathname || '');
+                    const match = this.matchRoute(
+                        r.path,
+                        parsedUrl.pathname || ''
+                    )
                     if (match) {
-                        req.params = match.params;
-                        return r.method === req.method;
+                        req.params = match.params
+                        return r.method === req.method
                     }
-                    return false;
-                });
+                    return false
+                })
 
-                let buffer: Buffer[] = [];
+                let buffer: Buffer[] = []
                 req.on('data', (chunk: Buffer) => {
-                    buffer.push(chunk);
+                    buffer.push(chunk)
                 }).on('end', async () => {
-                    const body = Buffer.concat(buffer).toString();
-                    req.body = body ? JSON.parse(body) : null;
-                    res.setHeader('Content-Type', 'application/json');
+                    const body = Buffer.concat(buffer).toString()
+                    req.body = body ? JSON.parse(body) : null
+                    res.setHeader('Content-Type', 'application/json')
                     if (route) {
                         try {
-                            await route.handler(
-                                req,
-                                res
-                            );
+                            await route.handler(req, res)
                             Logger.info(
                                 `${req.method} ${req.url} ${res.statusCode}`
-                            );
+                            )
                         } catch (error) {
                             const errorMessage =
                                 error instanceof Error
                                     ? error.message
-                                    : String(error);
+                                    : String(error)
                             const stackTraceArray =
                                 error instanceof Error
                                     ? error.stack
                                           ?.split('\n')
                                           .map((line) => line.trim())
-                                    : [];
+                                    : []
                             if (error instanceof ApiError) {
-                                res.statusCode = error.statusCode;
+                                res.statusCode = error.statusCode
                                 res.end(
                                     JSON.stringify({ message: errorMessage })
-                                );
+                                )
                             } else {
-                                res.statusCode = 500;
+                                res.statusCode = 500
                                 res.end(
                                     JSON.stringify({
                                         message: errorMessage,
                                         stack: stackTraceArray
                                     })
-                                );
+                                )
                             }
                             Logger.info(
                                 `${req.method} ${req.url} ${res.statusCode}`
-                            );
+                            )
                         }
                     } else {
-                        res.statusCode = 404;
-                        res.end(JSON.stringify({ message: 'Not found' }));
+                        res.statusCode = 404
+                        res.end(JSON.stringify({ message: 'Not found' }))
                         Logger.info(
                             `${req.method} ${req.url} ${res.statusCode}`
-                        );
+                        )
                     }
-                });
+                })
             }
-        );
+        )
     }
 
     public listen(port: number) {
         this.server.listen(port, async () => {
-            await migrateAll();
-            Logger.info(`Server is running on port ${port}`);
-        });
+            await migrateAll()
+            Logger.info(`Server is running on port ${port}`)
+        })
     }
 
     public addRoute(
         path: string,
         method: string,
-        handler: (
-            req: HttpRequest,
-            res: HttpResponse,
-        ) => void
+        handler: (req: HttpRequest, res: HttpResponse) => void
     ) {
-        this.routes.push({ path, method, handler });
+        this.routes.push({ path, method, handler })
     }
 
     private matchRoute(routePath: string, url: string) {
-        const routeRegex = this.pathToRegex(routePath);
-        const match = routeRegex.exec(url);
+        const routeRegex = this.pathToRegex(routePath)
+        const match = routeRegex.exec(url)
         if (match) {
-            const keys = routePath.match(/:[^/]+/g) || [];
-            const params: Record<string, string> = {};
+            const keys = routePath.match(/:[^/]+/g) || []
+            const params: Record<string, string> = {}
             keys.forEach((key, index) => {
-                const paramName = key.slice(1);
-                params[paramName] = match[index + 1];
-            });
-            return { params };
+                const paramName = key.slice(1)
+                params[paramName] = match[index + 1]
+            })
+            return { params }
         }
-        return null;
+        return null
     }
 
     private pathToRegex(path: string) {
-        const regexPath = path.replace(/:\w+/g, '([^/]+)');
-        return new RegExp(`^${regexPath}$`);
+        const regexPath = path.replace(/:\w+/g, '([^/]+)')
+        return new RegExp(`^${regexPath}$`)
     }
 }

@@ -6,6 +6,7 @@ import {
 } from '../../../dependencies/services'
 
 import { HttpRequest, HttpResponse } from '../../../../app'
+import { RecipeFilterValidator } from '../../../../domain/filters/recipes'
 
 export async function getRecipeController(req: HttpRequest, res: HttpResponse) {
     Logger.info('Get recipe by id')
@@ -46,8 +47,10 @@ export async function listAllRecipesController(
     const authService = await getAuthService(client)
     await authService.verifyHeader(req)
 
+    const filters = RecipeFilterValidator.validate(req.query)
+
     const recipeService = await getRecipesService(client)
-    const response = await recipeService.listAllRecipes()
+    const response = await recipeService.listAllRecipes(filters)
 
     client.release()
     res.statusCode = 200

@@ -4,6 +4,7 @@ import { db } from '../../output/database'
 import Logger from '../../../config/logger'
 import { getAuthService } from '../../../dependencies/services'
 import { getBuysService } from '../../../dependencies/services'
+import { BuyFilterValidator } from '../../../../domain/filters/buys'
 
 export async function listAllBuysController(
     req: HttpRequest,
@@ -15,8 +16,10 @@ export async function listAllBuysController(
     const authService = await getAuthService(client)
     await authService.verifyHeader(req)
 
+    const filters = BuyFilterValidator.validate(req.query)
+
     const orderService = await getBuysService(client)
-    const response = await orderService.listAllBuys()
+    const response = await orderService.listAllBuys(filters)
 
     client.release()
     res.statusCode = 200

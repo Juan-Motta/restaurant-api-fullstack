@@ -7,6 +7,7 @@ import { Queues } from '../../domain/constants/queues'
 import Logger from '../../infraestructure/config/logger'
 import { IEventsLogsRepository } from '../../domain/repositories/eventsLogs'
 import { EventLogsState } from '../../domain/constants/logsStates'
+import { OrderFilter } from '../../domain/filters/orders'
 
 export class OrdersService {
     private orderRepository: IOrderRepository
@@ -39,8 +40,10 @@ export class OrdersService {
         return createdOrder
     }
 
-    public listAllOrders() {
-        return this.orderRepository.listAll()
+    public async listAllOrders(filters: OrderFilter) {
+        const data = await this.orderRepository.listAll(filters)
+        const total = await this.orderRepository.countAll()
+        return { data, page: filters.page, perPage: filters.perPage, total }
     }
 
     public async sendCreateOrderEvent(

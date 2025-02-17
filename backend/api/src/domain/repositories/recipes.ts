@@ -1,7 +1,12 @@
 import { Recipe, RecipeWithIngredients } from '../entities/recipes'
+import { RecipeFilter } from '../filters/recipes'
 
 export class IRecipeRepository {
     async getRandomRecipe(): Promise<Recipe> {
+        throw new Error('Method not implemented.')
+    }
+
+    async countAll(): Promise<number> {
         throw new Error('Method not implemented.')
     }
 
@@ -9,7 +14,7 @@ export class IRecipeRepository {
         throw new Error('Method not implemented.')
     }
 
-    async listAllRecipes(): Promise<Recipe[]> {
+    async listAllRecipes(filters: RecipeFilter): Promise<Recipe[]> {
         throw new Error('Method not implemented.')
     }
 }

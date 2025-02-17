@@ -2,6 +2,7 @@ import { PoolClient } from 'pg'
 
 import { Order, OrderStatus } from '../../../../domain/entities/orders'
 import { IOrderRepository } from '../../../../domain/repositories/orders'
+import { OrderFilter } from '../../../../domain/filters/orders'
 
 export class OrderRepository implements IOrderRepository {
     private client: PoolClient
@@ -10,8 +11,13 @@ export class OrderRepository implements IOrderRepository {
         this.client = client
     }
 
-    async listAll(): Promise<Order[]> {
-        const res = await this.client.query(`
+    async countAll(): Promise<number> {
+        const res = await this.client.query('SELECT COUNT(*) FROM orders')
+        return parseInt(res.rows[0].count)
+    }
+
+    async listAll(filters: OrderFilter): Promise<Order[]> {
+        let query = `
             SELECT 
                 o.id AS orderId, 
                 o.recipe_id AS recipeId, 
@@ -21,7 +27,35 @@ export class OrderRepository implements IOrderRepository {
                 r.name AS recipeName 
             FROM orders o 
             JOIN recipes r ON r.id = o.recipe_id
-        `)
+        `
+        const conditions = []
+        const params = []
+
+        let paramIndex = 1
+
+        if (filters.orderStatus) {
+            conditions.push(`o.status = $${paramIndex++}`)
+            params.push(filters.orderStatus)
+        }
+
+        if (filters.orderId) {
+            conditions.push(`o.id = $${paramIndex++}`)
+            params.push(filters.orderId)
+        }
+
+        if (conditions.length > 0) {
+            query += ' WHERE ' + conditions.join(' AND ')
+        }
+
+        const page = filters.page
+        const perPage = filters.perPage
+        const offset = (page - 1) * perPage
+
+        query += ` LIMIT $${paramIndex++} OFFSET $${paramIndex++}`
+
+        params.push(perPage, offset)
+
+        const res = await this.client.query(query, params)
         return res.rows.map((row) => ({
             id: parseInt(row.orderid),
             recipe: { id: parseInt(row.recipeid), name: row.recipename },

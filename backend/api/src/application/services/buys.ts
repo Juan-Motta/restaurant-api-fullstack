@@ -1,3 +1,4 @@
+import { BuyFilter } from '../../domain/filters/buys'
 import { IBuysRepository } from '../../domain/repositories/buys'
 
 export class BuysService {
@@ -7,7 +8,9 @@ export class BuysService {
         this.buysRepository = buysRepository
     }
 
-    public listAllBuys() {
-        return this.buysRepository.listAll()
+    public async listAllBuys(filters: BuyFilter) {
+        const data = await this.buysRepository.listAll(filters)
+        const total = await this.buysRepository.countAll()
+        return { data, page: filters.page, perPage: filters.perPage, total }
     }
 }

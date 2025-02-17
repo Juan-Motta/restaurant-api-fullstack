@@ -4,12 +4,18 @@ import {
     RecipeWithIngredients
 } from '../../../../domain/entities/recipes'
 import { IRecipeRepository } from '../../../../domain/repositories/recipes'
+import { RecipeFilter } from '../../../../domain/filters/recipes'
 
 export class RecipeRepository implements IRecipeRepository {
     private client: PoolClient
 
     constructor(client: PoolClient) {
         this.client = client
+    }
+
+    async countAll(): Promise<number> {
+        const res = await this.client.query('SELECT COUNT(*) FROM recipes')
+        return parseInt(res.rows[0].count)
     }
 
     async getRandomRecipe(): Promise<Recipe> {
@@ -50,10 +56,37 @@ export class RecipeRepository implements IRecipeRepository {
         }
     }
 
-    async listAllRecipes(): Promise<Recipe[]> {
-        const res = await this.client.query(`
-            SELECT * FROM recipes
-        `)
+    async listAllRecipes(filters: RecipeFilter): Promise<Recipe[]> {
+        let query = `
+            SELECT * FROM recipes r
+        `
+        const conditions = []
+        const params = []
+
+        let paramIndex = 1
+
+        if (filters.recipeId) {
+            conditions.push(`r.id = $${paramIndex++}`)
+            params.push(filters.recipeId)
+        }
+
+        if (filters.recipeName) {
+            conditions.push(`r.name = $${paramIndex++}`)
+            params.push(filters.recipeName)
+        }
+
+        if (conditions.length > 0) {
+            query += ' WHERE ' + conditions.join(' AND ')
+        }
+
+        const page = filters.page
+        const perPage = filters.perPage
+        const offset = (page - 1) * perPage
+
+        query += ` LIMIT $${paramIndex++} OFFSET $${paramIndex++}`
+
+        params.push(perPage, offset)
+        const res = await this.client.query(query, params)
         return res.rows.map((row: any) => ({
             id: parseInt(row.id),
             name: row.name

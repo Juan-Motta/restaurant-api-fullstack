@@ -1,5 +1,6 @@
 import { OrderStatus } from '../entities/orders'
 import { Order } from '../entities/orders'
+import { OrderFilter } from '../filters/orders'
 
 export class IOrderRepository {
     async create(recipe_id: number, status: OrderStatus): Promise<Order> {
@@ -10,7 +11,11 @@ export class IOrderRepository {
         throw new Error('Method not implemented.')
     }
 
-    async listAll(): Promise<Order[]> {
+    async countAll(): Promise<number> {
+        throw new Error('Method not implemented.')
+    }
+
+    async listAll(filters: OrderFilter): Promise<Order[]> {
         throw new Error('Method not implemented.')
     }
 

@@ -13,7 +13,3 @@ export enum OrderStatus {
     FINISHED = 'FINISHED'
 ,
 }
-
-export interface CreateUserInput extends Body {
-    quantity?: number
-}

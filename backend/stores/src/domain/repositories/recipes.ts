@@ -1,4 +1,3 @@
-import { Recipe } from "../entities/recipes"
 import { RecipeIngredientNeeded } from "../entities/recipes"
 
 export class IRecipeRepository {

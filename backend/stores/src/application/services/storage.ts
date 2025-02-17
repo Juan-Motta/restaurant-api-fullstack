@@ -9,6 +9,7 @@ import { IRabbitMQProducer } from "../../domain/adapters/rabbitmq";
 import { Queues } from "../../domain/constants/queues";
 import { Events } from "../../domain/constants/events";
 import { OrderStatus } from "../../domain/entities/orders";
+import Logger from "../../infraestructure/config/logger";
 
 export class StorageService {
     private httpAdapter: IHttpAdapter;
@@ -29,7 +30,9 @@ export class StorageService {
 
     public async buyIngredient(ingredientId: number, ingredientName: string, quantityNeeded: number) {
         const ingredientsBought = await this.getIngredientsFromMarket(ingredientName);
+        Logger.info(`Buying ${ingredientsBought.quantity} of ${ingredientId}-${ingredientName}`);
         await this.buysRepository.create(ingredientId, ingredientsBought.quantity);
+        Logger.info(`Updating quantity of ${ingredientId}-${ingredientName} in storage`);
         await this.storageRepository.updateIngredientQuantity(ingredientId, ingredientsBought.quantity);
         const requiredQuantity = quantityNeeded - ingredientsBought.quantity;
         if (requiredQuantity > 0) {
@@ -55,7 +58,7 @@ export class StorageService {
     }
 
     public async notifyToKitchen(orderId: number) {
-        await this.rabbitMQProducer.publish(Queues.KITCHEN_QUEUE, {id: orderId, status: OrderStatus.IN_KITCHEN, event: Events.PREPARE_ORDER});
+        await this.rabbitMQProducer.publish(Queues.KITCHEN_QUEUE, {data: {orderId: orderId, orderStatus: OrderStatus.IN_KITCHEN}, event: Events.PREPARE_ORDER});
     }
 
     public async prepareIngrtedients(orderId: number) {

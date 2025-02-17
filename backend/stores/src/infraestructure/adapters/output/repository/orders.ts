@@ -28,7 +28,10 @@ export class OrderRepository implements IOrderRepository {
         )
         return {
             id: parseInt(res.rows[0].orderid),
-            recipe: {id: parseInt(res.rows[0].recipeid), name: res.rows[0].recipename},
+            recipe: {
+                id: parseInt(res.rows[0].recipeid),
+                name: res.rows[0].recipename
+            },
             status: res.rows[0].orderstatus,
             createdAt: res.rows[0].ordercreatedat
         }
@@ -56,7 +59,10 @@ export class OrderRepository implements IOrderRepository {
         )
         return {
             id: parseInt(res2.rows[0].orderid),
-            recipe: {id: parseInt(res2.rows[0].recipeid), name: res2.rows[0].recipename},
+            recipe: {
+                id: parseInt(res2.rows[0].recipeid),
+                name: res2.rows[0].recipename
+            },
             status: res2.rows[0].orderstatus,
             createdAt: res2.rows[0].ordercreatedat
         }

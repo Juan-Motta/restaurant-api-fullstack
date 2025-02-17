@@ -1,5 +1,5 @@
-import { OrderStatus } from "../entities/orders"
-import { Order } from "../entities/orders"
+import { OrderStatus } from '../entities/orders'
+import { Order } from '../entities/orders'
 
 export class IOrderRepository {
     async findById(id: number): Promise<Order | null> {

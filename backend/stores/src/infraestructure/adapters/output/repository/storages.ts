@@ -11,14 +11,16 @@ export class StorageRepository implements IStorageRepository {
 
     async getAllIngredients(): Promise<Ingredient[]> {
         const res = await this.client.query('SELECT * FROM ingredients;')
-        return res.rows.map(row => ({
+        return res.rows.map((row) => ({
             id: row.id,
-            name: row.name,
+            name: row.name
         }))
-
     }
 
-    async updateIngredientQuantity(ingredientId: number, quantity: number): Promise<void> {
+    async updateIngredientQuantity(
+        ingredientId: number,
+        quantity: number
+    ): Promise<void> {
         await this.client.query(
             'UPDATE storage SET quantity = quantity + $1 WHERE ingredient_id = $2;',
             [quantity, ingredientId]

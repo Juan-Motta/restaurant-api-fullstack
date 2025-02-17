@@ -1,5 +1,5 @@
-import { RabbitMQListener } from "./infraestructure/adapters/input/rabbitmq/listener";
-import { Queues } from "./domain/constants/queues";
+import { RabbitMQListener } from './infraestructure/adapters/input/rabbitmq/listener'
+import { Queues } from './domain/constants/queues'
 
 const listener = new RabbitMQListener()
 

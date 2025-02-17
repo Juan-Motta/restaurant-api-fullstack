@@ -12,6 +12,10 @@ export const settings = {
     JWT_EXPIRATION: process.env.JWT_EXPIRATION || '3600',
     API_PORT: process.env.API_PORT ? parseInt(process.env.API_PORT) : 3002,
     BROKER_HOST: process.env.BROKER_HOST || 'localhost',
-    BROKER_PORT: process.env.BROKER_PORT ? parseInt(process.env.BROKER_PORT) : 5672,
-    MARKET_URL: process.env.MARKET_URL || 'https://recruitment.alegra.com/api/farmers-market'
+    BROKER_PORT: process.env.BROKER_PORT
+        ? parseInt(process.env.BROKER_PORT)
+        : 5672,
+    MARKET_URL:
+        process.env.MARKET_URL ||
+        'https://recruitment.alegra.com/api/farmers-market'
 }

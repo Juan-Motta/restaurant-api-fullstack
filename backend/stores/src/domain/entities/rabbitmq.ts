@@ -1,7 +1,7 @@
 export interface CreateOrderMessage {
-    event: string;
+    event: string
     data: {
-        orderId: number;
-        orderStatus: string;
-    };
+        orderId: number
+        orderStatus: string
+    }
 }

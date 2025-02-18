@@ -18,7 +18,7 @@ services:
   api-load-balancer:
     image: nginx:alpine
     ports:
-      - "4000:80"
+      - "4003:80"
     volumes:
       - ./nginx.conf:/etc/nginx/nginx.conf
     depends_on:

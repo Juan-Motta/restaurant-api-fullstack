@@ -73,7 +73,7 @@ INSERT INTO recipes (id, name) VALUES
     (6, 'Lettuce Wraps with Spiced Meat and Ketchup')
 ON CONFLICT DO NOTHING;
 
-ALTER SEQUENCE recipes_id_seq RESTART WITH 6;
+ALTER SEQUENCE recipes_id_seq RESTART WITH 7;
 
 INSERT INTO ingredients (id, name) VALUES
     (1, 'tomato'),
@@ -88,7 +88,7 @@ INSERT INTO ingredients (id, name) VALUES
     (10, 'chicken')
 ON CONFLICT DO NOTHING;
 
-ALTER SEQUENCE ingredients_id_seq RESTART WITH 10;
+ALTER SEQUENCE ingredients_id_seq RESTART WITH 11;
 
 INSERT INTO recipe_ingredients (id, recipe_id, ingredient_id, quantity) VALUES
     (1, 1, 10, 1),
@@ -126,7 +126,7 @@ INSERT INTO recipe_ingredients (id, recipe_id, ingredient_id, quantity) VALUES
 	(33, 6, 2, 1)
 ON CONFLICT DO NOTHING;
 
-ALTER SEQUENCE recipe_ingredients_id_seq RESTART WITH 33;
+ALTER SEQUENCE recipe_ingredients_id_seq RESTART WITH 34;
 
 INSERT INTO storage (id, ingredient_id, quantity) VALUES
     (1, 1, 0),
@@ -141,10 +141,10 @@ INSERT INTO storage (id, ingredient_id, quantity) VALUES
 	(10, 10, 0)
 ON CONFLICT DO NOTHING;
 
-ALTER SEQUENCE storage_id_seq RESTART WITH 10;
+ALTER SEQUENCE storage_id_seq RESTART WITH 11;
 
 INSERT INTO users (id, name, email, password) VALUES
     (1, 'Jhon Doe', 'jhon@example.com', 'pbkdf2_sha256$30000$Jvt1ozf0BvOA$1g5Adp49w43H69qjX+VYihZWNbAECM+2xoaGQerzFrY=')
 ON CONFLICT DO NOTHING;
 
-ALTER SEQUENCE users_id_seq RESTART WITH 1;
+ALTER SEQUENCE users_id_seq RESTART WITH 2;

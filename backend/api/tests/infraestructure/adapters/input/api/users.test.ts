@@ -1,4 +1,5 @@
 import * as http from 'http'
+import { HttpRequest } from '../../../../../src/app'
 import {
     loginController,
     registerUserController
@@ -37,16 +38,18 @@ describe('User Controllers', () => {
             const mockResponse = { token: '12345' }
             mockAuthService.login.mockResolvedValue(mockResponse)
 
-            const req = {} as http.IncomingMessage
+            const req = {
+                body: {
+                    email: 'test@example.com',
+                    password: 'password'
+                } as Record<string, string>
+            } as HttpRequest
             const res = {
                 statusCode: 0,
                 end: jest.fn()
             } as unknown as http.ServerResponse
 
-            await loginController(req, res, {
-                email: 'test@example.com',
-                password: 'password'
-            })
+            await loginController(req, res)
 
             expect(getAuthService).toHaveBeenCalledWith(mockClient)
             expect(mockAuthService.login).toHaveBeenCalledWith(
@@ -63,12 +66,6 @@ describe('User Controllers', () => {
             const mockResponse = { id: '1', name: 'Test User' }
             mockUserService.createUser.mockResolvedValue(mockResponse)
 
-            const req = {} as http.IncomingMessage
-            const res = {
-                statusCode: 0,
-                end: jest.fn()
-            } as unknown as http.ServerResponse
-
             const body = {
                 name: 'Test User',
                 email: 'test@example.com',
@@ -76,7 +73,15 @@ describe('User Controllers', () => {
                 confirmPassword: 'password'
             }
 
-            await registerUserController(req, res, body)
+            const req = {
+                body: body as Record<string, string>
+            } as HttpRequest
+            const res = {
+                statusCode: 0,
+                end: jest.fn()
+            } as unknown as http.ServerResponse
+
+            await registerUserController(req, res)
 
             expect(getUserService).toHaveBeenCalledWith(mockClient)
             expect(mockUserService.createUser).toHaveBeenCalledWith(

@@ -1,15 +1,6 @@
-<script setup lang="ts">
-
-defineProps({
-  isSidebarOpen: Boolean,
-})
-
-</script>
-
-
 <template>
   <aside :class="[
-    'flex  flex-col bg-white w-64 fixed h-full transition-transform duration-300 ease-in-out md:translate-x-0',
+    'flex flex-col bg-white w-64 fixed h-full transition-transform duration-300 ease-in-out md:translate-x-0',
     { 'translate-x-0': isSidebarOpen, '-translate-x-full': !isSidebarOpen }
   ]">
     <div class="mt-4 mb-4 flex flex-none justify-center">
@@ -36,11 +27,28 @@ defineProps({
           <img class="w-8 h-8 rounded-full" src="/public/favicon.ico" alt="User avatar">
           <div class="ml-3">
             <p class="text-sm font-medium text-gray-700">Username</p>
-            <button @click="$emit('logout')"
-              class="text-xs font-medium text-gray-500 hover:text-gray-700">Logout</button>
+            <button @click="logout" class="text-xs font-medium text-gray-500 hover:text-gray-700">Logout</button>
           </div>
         </div>
       </div>
     </div>
   </aside>
 </template>
+
+<script setup lang="ts">
+import { defineProps } from 'vue';
+import { useRouter } from 'vue-router';
+
+defineProps({
+  isSidebarOpen: Boolean,
+});
+
+const router = useRouter();
+
+const logout = () => {
+  localStorage.removeItem('jwt');
+  router.push('/login');
+};
+</script>
+
+<style scoped></style>

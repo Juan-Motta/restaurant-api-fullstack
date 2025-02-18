@@ -1,195 +1,39 @@
-import { type Order, OrderStatus } from '../types/orders'
+import axios from 'axios'
 
-export async function getAllOrders(): Promise<Order[]> {
-  return [
+export const getAllOrders = async (
+  page: number,
+  perPage: number,
+  orderId?: number,
+  orderStatus?: string,
+) => {
+  const token = localStorage.getItem('jwt')
+  let url = `${import.meta.env.VITE_API_URL}/orders?page=${page}&perPage=${perPage}`
+  if (orderId) {
+    url += `&orderId=${orderId}`
+  }
+  if (orderStatus) {
+    url += `&orderStatus=${orderStatus}`
+  }
+  const response = await axios.get(url, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  })
+
+  return response.data
+}
+
+export const createOrder = async () => {
+  const token = localStorage.getItem('jwt')
+  const response = await axios.post(
+    `${import.meta.env.VITE_API_URL}/orders`,
+    {},
     {
-      id: 1,
-      name: 'Jhon',
-      status: OrderStatus.PREPARING,
-      date: '2021-01-01 10:00:00',
-      recipe: {
-        id: 1,
-        name: 'Pizza',
-        ingredients: [
-          {
-            id: 1,
-            name: 'Flour',
-            quantity: 1,
-          },
-          {
-            id: 2,
-            name: 'Tomato',
-            quantity: 2,
-          },
-          {
-            id: 3,
-            name: 'Cheese',
-            quantity: 3,
-          },
-        ],
+      headers: {
+        Authorization: `Bearer ${token}`,
       },
     },
-    {
-      id: 2,
-      name: 'Jhon',
-      status: OrderStatus.PREPARING,
-      date: '2021-01-01 10:00:00',
-      recipe: {
-        id: 1,
-        name: 'Pizza',
-        ingredients: [
-          {
-            id: 1,
-            name: 'Flour',
-            quantity: 1,
-          },
-          {
-            id: 2,
-            name: 'Tomato',
-            quantity: 2,
-          },
-          {
-            id: 3,
-            name: 'Cheese',
-            quantity: 3,
-          },
-        ],
-      },
-    },
-    {
-      id: 3,
-      name: 'Jhon',
-      status: OrderStatus.IN_KITCHEN,
-      date: '2021-01-01 10:00:00',
-      recipe: {
-        id: 1,
-        name: 'Pizza',
-        ingredients: [
-          {
-            id: 1,
-            name: 'Flour',
-            quantity: 1,
-          },
-          {
-            id: 2,
-            name: 'Tomato',
-            quantity: 2,
-          },
-          {
-            id: 3,
-            name: 'Cheese',
-            quantity: 3,
-          },
-        ],
-      },
-    },
-    {
-      id: 4,
-      name: 'Jhon',
-      status: OrderStatus.IN_KITCHEN,
-      date: '2021-01-01 10:00:00',
-      recipe: {
-        id: 1,
-        name: 'Pizza',
-        ingredients: [
-          {
-            id: 1,
-            name: 'Flour',
-            quantity: 1,
-          },
-          {
-            id: 2,
-            name: 'Tomato',
-            quantity: 2,
-          },
-          {
-            id: 3,
-            name: 'Cheese',
-            quantity: 3,
-          },
-        ],
-      },
-    },
-    {
-      id: 5,
-      name: 'Jhon',
-      status: OrderStatus.FINISHED,
-      date: '2021-01-01 10:00:00',
-      recipe: {
-        id: 1,
-        name: 'Pizza',
-        ingredients: [
-          {
-            id: 1,
-            name: 'Flour',
-            quantity: 1,
-          },
-          {
-            id: 2,
-            name: 'Tomato',
-            quantity: 2,
-          },
-          {
-            id: 3,
-            name: 'Cheese',
-            quantity: 3,
-          },
-        ],
-      },
-    },
-    {
-      id: 6,
-      name: 'Jhon',
-      status: OrderStatus.FINISHED,
-      date: '2021-01-01 10:00:00',
-      recipe: {
-        id: 1,
-        name: 'Pizza',
-        ingredients: [
-          {
-            id: 1,
-            name: 'Flour',
-            quantity: 1,
-          },
-          {
-            id: 2,
-            name: 'Tomato',
-            quantity: 2,
-          },
-          {
-            id: 3,
-            name: 'Cheese',
-            quantity: 3,
-          },
-        ],
-      },
-    },
-    {
-      id: 7,
-      name: 'Jhon',
-      status: OrderStatus.PREPARING,
-      date: '2021-01-01 10:00:00',
-      recipe: {
-        id: 1,
-        name: 'Pizza',
-        ingredients: [
-          {
-            id: 1,
-            name: 'Flour',
-            quantity: 1,
-          },
-          {
-            id: 2,
-            name: 'Tomato',
-            quantity: 2,
-          },
-          {
-            id: 3,
-            name: 'Cheese',
-            quantity: 3,
-          },
-        ],
-      },
-    },
-  ]
+  )
+
+  return response.data
 }

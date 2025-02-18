@@ -1,17 +1,17 @@
 <script setup lang="ts">
-import { getAllOrders } from '@/services/orders';
+import { getAllBuys } from '@/services/buys';
 import { type Order } from '@/types/orders';
 import { ref, onMounted, watch } from 'vue';
 
-const orders = ref<Order[]>([]);
+const buys = ref<Order[]>([]);
 const isLoading = ref(true);
 const currentPage = ref(1);
 const ordersPerPage = ref(20);
 const totalOrders = ref(0);
 
-const idFilter = ref('');
-const nameFilter = ref('');
-const statusFilter = ref('');
+const idBuyFilter = ref('');
+const idIngredientFilter = ref('');
+const idIngredientNameFilter = ref('');
 
 const fetchOrders = async (page: number) => {
 
@@ -22,15 +22,18 @@ const fetchOrders = async (page: number) => {
       perPage: ordersPerPage.value,
     };
 
-    if (idFilter.value) {
-      params.orderId = idFilter.value;
+    if (idBuyFilter.value) {
+      params.buyId = idBuyFilter.value;
     }
-    if (statusFilter.value) {
-      params.orderStatus = statusFilter.value;
+    if (idIngredientFilter.value) {
+      params.ingredientId = idIngredientFilter.value;
+    }
+    if (idIngredientNameFilter.value) {
+      params.ingredientName = idIngredientNameFilter.value;
     }
 
-    const data = await getAllOrders(params.page, params.perPage, params.orderId, params.orderStatus);
-    orders.value = data.data;
+    const data = await getAllBuys(params.page, params.perPage, params.buyId, params.ingredientId, params.ingredientName);
+    buys.value = data.data;
     totalOrders.value = data.total;
   } catch (error) {
     console.error('Error fetching orders:', error);
@@ -44,7 +47,7 @@ const changePage = (page: number) => {
   fetchOrders(currentPage.value);
 };
 
-watch([idFilter, nameFilter, statusFilter], () => {
+watch([idBuyFilter, idIngredientFilter, idIngredientNameFilter], () => {
   currentPage.value = 1;
   fetchOrders(currentPage.value);
 });
@@ -57,13 +60,11 @@ onMounted(() => {
 <template>
   <div class="bg-white/50 py-8 px-5 border-shadow rounded-xl h-full flex flex-col">
     <div class="mb-4">
-      <input type="text" v-model="idFilter" placeholder="Filter by ID" class="border rounded p-2 mr-2" />
-      <select v-model="statusFilter" class="border rounded p-2">
-        <option value="">All Statuses</option>
-        <option value="pending">Pending</option>
-        <option value="completed">Completed</option>
-        <option value="canceled">Canceled</option>
-      </select>
+      <input type="text" v-model="idBuyFilter" placeholder="Filter by buy ID" class="border rounded p-2 mr-2" />
+      <input type="text" v-model="idIngredientFilter" placeholder="Filter by ingredient ID"
+        class="border rounded p-2 mr-2" />
+      <input type="text" v-model="idIngredientNameFilter" placeholder="Filter by ingredient name"
+        class="border rounded p-2 mr-2" />
     </div>
 
     <div v-if="isLoading" class="flex items-center justify-center h-32">
@@ -74,18 +75,18 @@ onMounted(() => {
       <table class="min-w-full border-collapse">
         <thead>
           <tr class="text-left">
-            <th class="pt-2 pb-6 px-4">Id</th>
-            <th class="pt-2 pb-6 px-4 hidden md:table-cell">Name</th>
-            <th class="pt-2 pb-6 px-4">Date</th>
-            <th class="pt-2 pb-6 px-4 hidden md:table-cell">Status</th>
+            <th class="pt-2 pb-6 px-4">Buy Id</th>
+            <th class="pt-2 pb-6 px-4 hidden md:table-cell">Ingredient Id</th>
+            <th class="pt-2 pb-6 px-4">Ingredient Name</th>
+            <th class="pt-2 pb-6 px-4 hidden md:table-cell">Quantity</th>
           </tr>
         </thead>
         <tbody>
-          <tr v-for="order in orders" :key="order.id">
-            <td class="py-2 px-4">{{ order.id }}</td>
-            <td class="py-2 px-4 hidden md:table-cell">{{ order.recipe.name }}</td>
-            <td class="py-2 px-4">{{ order.createdAt }}</td>
-            <td class="py-2 px-4 hidden md:table-cell">{{ order.status }}</td>
+          <tr v-for="buy in buys" :key="buy.id">
+            <td class="py-2 px-4">{{ buy.id }}</td>
+            <td class="py-2 px-4 hidden md:table-cell">{{ buy.ingredient.id }}</td>
+            <td class="py-2 px-4">{{ buy.ingredient.name }}</td>
+            <td class="py-2 px-4 hidden md:table-cell">{{ buy.quantity }}</td>
           </tr>
         </tbody>
       </table>

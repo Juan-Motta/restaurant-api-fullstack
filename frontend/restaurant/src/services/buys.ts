@@ -1,0 +1,28 @@
+import axios from 'axios'
+
+export const getAllBuys = async (
+  page: number,
+  perPage: number,
+  buyId?: number,
+  ingredientId?: string,
+  ingredientName?: string,
+) => {
+  const token = localStorage.getItem('jwt')
+  let url = `${import.meta.env.VITE_API_URL}/buys?page=${page}&perPage=${perPage}`
+  if (buyId) {
+    url += `&buyId=${buyId}`
+  }
+  if (ingredientId) {
+    url += `&ingredientId=${ingredientId}`
+  }
+  if (ingredientName) {
+    url += `&ingredientName=${ingredientName}`
+  }
+  const response = await axios.get(url, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  })
+
+  return response.data
+}

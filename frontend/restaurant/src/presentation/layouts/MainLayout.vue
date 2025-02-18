@@ -4,7 +4,7 @@
     <div class="flex-1 flex flex-col md:ml-64">
       <LayoutTitleItem :is-sidebar-open="isSidebarOpen" @toggle-sidebar="toggleSidebar" />
       <main class="flex-1 overflow-y-auto bg-gray-100">
-        <div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8 h-full">
           <slot></slot>
         </div>
       </main>

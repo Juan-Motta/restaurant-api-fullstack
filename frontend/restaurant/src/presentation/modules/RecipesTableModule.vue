@@ -1,17 +1,16 @@
 <script setup lang="ts">
-import { getAllOrders } from '@/services/orders';
+import { getAllRecipes } from '@/services/recipes';
 import { type Order } from '@/types/orders';
 import { ref, onMounted, watch } from 'vue';
 
-const orders = ref<Order[]>([]);
+const recipes = ref<Order[]>([]);
 const isLoading = ref(true);
 const currentPage = ref(1);
 const ordersPerPage = ref(20);
 const totalOrders = ref(0);
 
-const idFilter = ref('');
-const nameFilter = ref('');
-const statusFilter = ref('');
+const idRecipeFilter = ref('');
+const idRecipeNameFilter = ref('');
 
 const fetchOrders = async (page: number) => {
 
@@ -22,15 +21,15 @@ const fetchOrders = async (page: number) => {
       perPage: ordersPerPage.value,
     };
 
-    if (idFilter.value) {
-      params.orderId = idFilter.value;
+    if (idRecipeFilter.value) {
+      params.recipeId = idRecipeFilter.value;
     }
-    if (statusFilter.value) {
-      params.orderStatus = statusFilter.value;
+    if (idRecipeNameFilter.value) {
+      params.recipeName = idRecipeNameFilter.value;
     }
 
-    const data = await getAllOrders(params.page, params.perPage, params.orderId, params.orderStatus);
-    orders.value = data.data;
+    const data = await getAllRecipes(params.page, params.perPage, params.recipeId, params.recipeName);
+    recipes.value = data.data;
     totalOrders.value = data.total;
   } catch (error) {
     console.error('Error fetching orders:', error);
@@ -44,7 +43,7 @@ const changePage = (page: number) => {
   fetchOrders(currentPage.value);
 };
 
-watch([idFilter, nameFilter, statusFilter], () => {
+watch([idRecipeFilter, idRecipeNameFilter], () => {
   currentPage.value = 1;
   fetchOrders(currentPage.value);
 });
@@ -57,13 +56,9 @@ onMounted(() => {
 <template>
   <div class="bg-white/50 py-8 px-5 border-shadow rounded-xl h-full flex flex-col">
     <div class="mb-4">
-      <input type="text" v-model="idFilter" placeholder="Filter by ID" class="border rounded p-2 mr-2" />
-      <select v-model="statusFilter" class="border rounded p-2">
-        <option value="">All Statuses</option>
-        <option value="pending">Pending</option>
-        <option value="completed">Completed</option>
-        <option value="canceled">Canceled</option>
-      </select>
+      <input type="text" v-model="idRecipeFilter" placeholder="Filter by recipe ID" class="border rounded p-2 mr-2" />
+      <input type="text" v-model="idRecipeNameFilter" placeholder="Filter by recipe name"
+        class="border rounded p-2 mr-2" />
     </div>
 
     <div v-if="isLoading" class="flex items-center justify-center h-32">
@@ -76,16 +71,12 @@ onMounted(() => {
           <tr class="text-left">
             <th class="pt-2 pb-6 px-4">Id</th>
             <th class="pt-2 pb-6 px-4 hidden md:table-cell">Name</th>
-            <th class="pt-2 pb-6 px-4">Date</th>
-            <th class="pt-2 pb-6 px-4 hidden md:table-cell">Status</th>
           </tr>
         </thead>
         <tbody>
-          <tr v-for="order in orders" :key="order.id">
-            <td class="py-2 px-4">{{ order.id }}</td>
-            <td class="py-2 px-4 hidden md:table-cell">{{ order.recipe.name }}</td>
-            <td class="py-2 px-4">{{ order.createdAt }}</td>
-            <td class="py-2 px-4 hidden md:table-cell">{{ order.status }}</td>
+          <tr v-for="recipe in recipes" :key="recipe.id">
+            <td class="py-2 px-4">{{ recipe.id }}</td>
+            <td class="py-2 px-4 hidden md:table-cell">{{ recipe.name }}</td>
           </tr>
         </tbody>
       </table>

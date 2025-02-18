@@ -15,10 +15,6 @@ import {
     getRecipeController,
     listAllRecipesController
 } from './infraestructure/adapters/input/api/recipes'
-import Logger from './infraestructure/config/logger'
-
-
-Logger.info(`${JSON.stringify(settings)}`)
 
 const server = new HttpServer()
 

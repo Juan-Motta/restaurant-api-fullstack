@@ -40,34 +40,10 @@ export class OrderRepository implements IOrderRepository {
         }
     }
 
-    async updateStatus(id: number, status: OrderStatus): Promise<Order> {
-        const res1 = await this.client.query(
-            'UPDATE orders SET status = $1 WHERE id = $2 RETURNING *',
+    async updateStatus(id: number, status: OrderStatus) {
+        await this.client.query(
+            'UPDATE orders SET status = $1 WHERE id = $2;',
             [status, id]
         )
-        const res2 = await this.client.query(
-            `
-            SELECT 
-                o.id AS orderId, 
-                o.recipe_id AS recipeId, 
-                o.status AS orderStatus, 
-                o.created_at AS orderCreatedAt, 
-                r.id AS recipeId, 
-                r.name AS recipeName 
-            FROM orders o 
-            JOIN recipes r ON r.id = o.recipe_id
-            WHERE o.id = $1
-            `,
-            [res1.rows[0].id]
-        )
-        return {
-            id: parseInt(res2.rows[0].orderid),
-            recipe: {
-                id: parseInt(res2.rows[0].recipeid),
-                name: res2.rows[0].recipename
-            },
-            status: res2.rows[0].orderstatus,
-            createdAt: res2.rows[0].ordercreatedat
-        }
     }
 }

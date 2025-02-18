@@ -9,9 +9,14 @@ import { getEventsLogsRepository } from '../../../dependencies/repositories'
 import { EventLogsState } from '../../../../domain/constants/logsStates'
 
 export class RabbitMQListener {
+    private async delay(ms: number) {
+        return new Promise(resolve => setTimeout(resolve, ms));
+    }
+
     public async handler(message: CreateOrderMessage) {
         if (message.event === Events.PREPARE_ORDER) {
             Logger.info(`Preparing order ${message.data.orderId}`)
+            await this.delay(5000);
             const client = await db.connect()
             const eventsLogsRepository = await getEventsLogsRepository(client)
             try {
@@ -53,12 +58,12 @@ export class RabbitMQListener {
             await channel.assertQueue(queue, { durable: false })
             await channel.consume(
                 queue,
-                (message) => {
+                async (message) => {
                     if (message) {
                         Logger.info(
                             `Received message: ${message.content.toString()}`
                         )
-                        this.handler(JSON.parse(message.content.toString()))
+                        await this.handler(JSON.parse(message.content.toString()))
                     }
                 },
                 { noAck: true }

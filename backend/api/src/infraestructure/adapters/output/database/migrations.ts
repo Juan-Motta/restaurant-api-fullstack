@@ -1,5 +1,5 @@
 import { db } from '../../output/database'
-import { UsersModel } from './models'
+import { UsersModel, StorageModel, RecipesModel, RecipeIngredientsModel, OrdersModel, IngredientsModel, EventLogsModel, BuysModel } from './scripts'
 import Logger from '../../../config/logger'
 
 export async function migrate(model: {
@@ -32,4 +32,11 @@ export async function migrate(model: {
 export async function migrateAll() {
     Logger.info('Migrating tables...')
     await migrate(UsersModel)
+    await migrate(IngredientsModel)
+    await migrate(RecipesModel)
+    await migrate(RecipeIngredientsModel)
+    await migrate(StorageModel)
+    await migrate(OrdersModel)
+    await migrate(BuysModel)
+    await migrate(EventLogsModel)
 }

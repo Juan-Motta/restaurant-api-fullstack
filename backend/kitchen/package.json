@@ -9,7 +9,7 @@
     "dev:server": "ts-node-dev --respawn --project tsconfig.json src/app.ts",
     "dev:listener": "ts-node-dev --respawn --project tsconfig.json src/listener.ts",
     "build": "tsc",
-    "prod": "node ./dist/app.js",
+    "prod:listener": "node ./dist/src/listener.js",
     "format": "prettier --write \"src/**/*.ts\" \"tests/**/*.ts\""
   },
   "keywords": [],

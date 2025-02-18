@@ -1,6 +1,6 @@
 import { migrate } from '../../../../../src/infraestructure/adapters/output/database/migrations'
 import { db } from '../../../../../src/infraestructure/adapters/output/database/index'
-import { UsersModel } from '../../../../../src/infraestructure/adapters/output/database/models'
+import { UsersModel } from '../../../../../src/infraestructure/adapters/output/database/scripts'
 
 jest.mock(
     '../../../../../src/infraestructure/adapters/output/database/index',

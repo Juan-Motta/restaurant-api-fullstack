@@ -6,7 +6,7 @@ export class IOrderRepository {
         throw new Error('Method not implemented.')
     }
 
-    async updateStatus(id: number, status: OrderStatus): Promise<Order> {
+    async updateStatus(id: number, status: OrderStatus) {
         throw new Error('Method not implemented.')
     }
 }

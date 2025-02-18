@@ -8,7 +8,7 @@
     "test:coverage": "jest --coverage",
     "dev:server": "ts-node-dev --respawn --project tsconfig.json src/index.ts",
     "build": "tsc",
-    "prod:server": "node ./dist/index.js",
+    "prod:server": "node ./dist/src/index.js",
     "format": "prettier --write \"src/**/*.ts\" \"tests/**/*.ts\""
   },
   "keywords": [],

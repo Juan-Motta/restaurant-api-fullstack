@@ -25,7 +25,7 @@ export class KitchenService {
         await this.storageRepository.removeIngredientsFromStorage(
             order.recipe.id as number
         )
-        Logger.info(`Order ${orderId} prepared`)
         await this.orderRepository.updateStatus(orderId, OrderStatus.FINISHED)
+        Logger.info(`Order ${orderId} prepared`)
     }
 }

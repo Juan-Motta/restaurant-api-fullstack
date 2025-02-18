@@ -54,7 +54,6 @@ export class BuysRepository implements IBuysRepository {
         const offset = (page - 1) * perPage
 
         query += ` LIMIT $${paramIndex++} OFFSET $${paramIndex++}`
-        console.log(query)
 
         params.push(perPage, offset)
 

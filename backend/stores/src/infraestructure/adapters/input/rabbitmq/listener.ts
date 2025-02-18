@@ -25,7 +25,7 @@ export class RabbitMQListener {
                     null
                 )
                 const storageService = await getStorageService(client)
-                storageService.prepareIngrtedients(message.data.orderId)
+                await storageService.prepareIngrtedients(message.data.orderId)
             } catch (error) {
                 const errorMessage = `Error preparing ingredients: ${error}`
                 await eventsLogsRepository.create(

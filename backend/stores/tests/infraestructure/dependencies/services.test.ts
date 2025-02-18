@@ -1,31 +1,63 @@
-import {
-    getUserService,
-    getAuthService
-} from '../../../src/infraestructure/dependencies/services'
-import { PoolClient } from 'pg'
-import { UserService } from '../../../src/application/services/user'
-import { AuthService } from '../../../src/application/services/auth'
+import { PoolClient } from 'pg';
+import { getStorageService } from '../../../src/infraestructure/dependencies/services';
+import { StorageService } from '../../../src/application/services/storage';
+import { getRecipeRepository, getOrderRepository, getEventsLogsRepository, getBuysRepository, getStorageRespository } from '../../../src/infraestructure/dependencies/repositories';
+import { getHttpAdapter, getRabbitMQProducer } from '../../../src/infraestructure/dependencies/utils';
+import { HttpAdapter } from '../../../src/infraestructure/adapters/output/http/request';
+import { RabbitMQProducer } from '../../../src/infraestructure/adapters/output/rabbitmq/producer';
 
-jest.mock('../../../src/infraestructure/adapters/output/repository/users')
-jest.mock('../../../src/infraestructure/utils/password')
-jest.mock('../../../src/infraestructure/utils/jwt')
-jest.mock('../../../src/application/services/user')
-jest.mock('../../../src/application/services/auth')
+jest.mock('../../../src/infraestructure/dependencies/repositories', () => ({
+    getRecipeRepository: jest.fn(),
+    getOrderRepository: jest.fn(),
+    getEventsLogsRepository: jest.fn(),
+    getBuysRepository: jest.fn(),
+    getStorageRespository: jest.fn(),
+}));
 
-describe('Service Factory Functions', () => {
-    let mockClient: PoolClient
+jest.mock('../../../src/infraestructure/dependencies/utils', () => ({
+    getHttpAdapter: jest.fn(),
+    getRabbitMQProducer: jest.fn(),
+}));
+
+describe('StorageService Factory Function', () => {
+    let mockClient: PoolClient;
 
     beforeEach(() => {
-        mockClient = {} as PoolClient
-    })
+        mockClient = {
+            query: jest.fn(),
+        } as unknown as PoolClient;
+    });
 
-    it('should return an instance of UserService', async () => {
-        const userService = await getUserService(mockClient)
-        expect(userService).toBeInstanceOf(UserService)
-    })
+    afterEach(() => {
+        jest.clearAllMocks();
+    });
 
-    it('should return an instance of AuthService', async () => {
-        const authService = await getAuthService(mockClient)
-        expect(authService).toBeInstanceOf(AuthService)
-    })
-})
+    it('should return an instance of StorageService', async () => {
+        const mockHttpAdapter = new HttpAdapter();
+        const mockRecipeRepository = {};
+        const mockBuysRepository = {};
+        const mockOrderRepository = {};
+        const mockStorageRepository = {};
+        const mockRabbitMQProducer = new RabbitMQProducer();
+        const mockEventsLogsRepository = {};
+
+        (getHttpAdapter as jest.Mock).mockResolvedValue(mockHttpAdapter);
+        (getRecipeRepository as jest.Mock).mockResolvedValue(mockRecipeRepository);
+        (getBuysRepository as jest.Mock).mockResolvedValue(mockBuysRepository);
+        (getOrderRepository as jest.Mock).mockResolvedValue(mockOrderRepository);
+        (getStorageRespository as jest.Mock).mockResolvedValue(mockStorageRepository);
+        (getRabbitMQProducer as jest.Mock).mockResolvedValue(mockRabbitMQProducer);
+        (getEventsLogsRepository as jest.Mock).mockResolvedValue(mockEventsLogsRepository);
+        
+        const storageService = await getStorageService(mockClient);
+
+        expect(storageService).toBeInstanceOf(StorageService);
+        expect(getHttpAdapter).toHaveBeenCalled();
+        expect(getRecipeRepository).toHaveBeenCalledWith(mockClient);
+        expect(getBuysRepository).toHaveBeenCalledWith(mockClient);
+        expect(getOrderRepository).toHaveBeenCalledWith(mockClient);
+        expect(getStorageRespository).toHaveBeenCalledWith(mockClient);
+        expect(getRabbitMQProducer).toHaveBeenCalled();
+        expect(getEventsLogsRepository).toHaveBeenCalledWith(mockClient);
+    });
+});

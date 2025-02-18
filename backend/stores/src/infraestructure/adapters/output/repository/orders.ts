@@ -26,6 +26,9 @@ export class OrderRepository implements IOrderRepository {
             `,
             [id]
         )
+        if (res.rows.length === 0) {
+            return null
+        }
         return {
             id: parseInt(res.rows[0].orderid),
             recipe: {
@@ -37,7 +40,7 @@ export class OrderRepository implements IOrderRepository {
         }
     }
 
-    async updateStatus(id: number, status: OrderStatus): Promise<Order> {
+    async updateStatus(id: number, status: OrderStatus) {
         const res1 = await this.client.query(
             'UPDATE orders SET status = $1 WHERE id = $2 RETURNING *',
             [status, id]
@@ -57,14 +60,5 @@ export class OrderRepository implements IOrderRepository {
             `,
             [res1.rows[0].id]
         )
-        return {
-            id: parseInt(res2.rows[0].orderid),
-            recipe: {
-                id: parseInt(res2.rows[0].recipeid),
-                name: res2.rows[0].recipename
-            },
-            status: res2.rows[0].orderstatus,
-            createdAt: res2.rows[0].ordercreatedat
-        }
     }
 }

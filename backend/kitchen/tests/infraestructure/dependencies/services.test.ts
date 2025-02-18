@@ -1,31 +1,37 @@
-import {
-    getUserService,
-    getAuthService
-} from '../../../src/infraestructure/dependencies/services'
-import { PoolClient } from 'pg'
-import { UserService } from '../../../src/application/services/user'
-import { AuthService } from '../../../src/application/services/auth'
+import { PoolClient } from 'pg';
+import { getKitchenService } from '../../../src/infraestructure/dependencies/services';
+import { KitchenService } from '../../../src/application/services/kitchen';
+import { getOrderRepository, getSorageRepository } from '../../../src/infraestructure/dependencies/repositories';
 
-jest.mock('../../../src/infraestructure/adapters/output/repository/users')
-jest.mock('../../../src/infraestructure/utils/password')
-jest.mock('../../../src/infraestructure/utils/jwt')
-jest.mock('../../../src/application/services/user')
-jest.mock('../../../src/application/services/auth')
+jest.mock('../../../src/infraestructure/dependencies/repositories', () => ({
+    getOrderRepository: jest.fn(),
+    getSorageRepository: jest.fn(),
+}));
 
-describe('Service Factory Functions', () => {
-    let mockClient: PoolClient
+describe('KitchenService Factory Function', () => {
+    let mockClient: PoolClient;
 
     beforeEach(() => {
-        mockClient = {} as PoolClient
-    })
+        mockClient = {
+            query: jest.fn(),
+        } as unknown as PoolClient;
+    });
 
-    it('should return an instance of UserService', async () => {
-        const userService = await getUserService(mockClient)
-        expect(userService).toBeInstanceOf(UserService)
-    })
+    afterEach(() => {
+        jest.clearAllMocks();
+    });
 
-    it('should return an instance of AuthService', async () => {
-        const authService = await getAuthService(mockClient)
-        expect(authService).toBeInstanceOf(AuthService)
-    })
-})
+    it('should return an instance of KitchenService', async () => {
+        const mockOrderRepository = {};
+        const mockStorageRepository = {};
+        
+        (getOrderRepository as jest.Mock).mockResolvedValue(mockOrderRepository);
+        (getSorageRepository as jest.Mock).mockResolvedValue(mockStorageRepository);
+
+        const kitchenService = await getKitchenService(mockClient);
+
+        expect(kitchenService).toBeInstanceOf(KitchenService);
+        expect(getOrderRepository).toHaveBeenCalledWith(mockClient);
+        expect(getSorageRepository).toHaveBeenCalledWith(mockClient);
+    });
+});

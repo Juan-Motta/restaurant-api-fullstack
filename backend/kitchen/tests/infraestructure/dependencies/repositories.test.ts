@@ -1,25 +1,34 @@
-import { PoolClient } from 'pg'
-import { IUserRepository } from '../../../src/domain/repositories/users'
-import { getUserRepository } from '../../../src/infraestructure/dependencies/repositories'
-import { UserRepository } from '../../../src/infraestructure/adapters/output/repository/orders'
+import { PoolClient } from 'pg';
+import { getOrderRepository, getSorageRepository, getEventsLogsRepository } from '../../../src/infraestructure/dependencies/repositories';
+import { OrderRepository } from '../../../src/infraestructure/adapters/output/repository/orders';
+import { StorageRepository } from '../../../src/infraestructure/adapters/output/repository/storages';
+import { EventsLogsRepository } from '../../../src/infraestructure/adapters/output/repository/eventsLogs';
 
-jest.mock('../../../src/infraestructure/adapters/output/repository/users')
-
-describe('getUserRepository', () => {
-    let mockClient: PoolClient
+describe('Repository Factory Functions', () => {
+    let mockClient: PoolClient;
 
     beforeEach(() => {
-        mockClient = {} as PoolClient
-    })
+        mockClient = {
+            query: jest.fn(),
+        } as unknown as PoolClient;
+    });
 
-    it('should return an instance of IUserRepository', async () => {
-        ;(UserRepository as jest.Mock).mockImplementation(() => {
-            return this
-        })
+    afterEach(() => {
+        jest.clearAllMocks();
+    });
 
-        const userRepository: IUserRepository =
-            await getUserRepository(mockClient)
+    it('should return an instance of OrderRepository', async () => {
+        const orderRepository = await getOrderRepository(mockClient);
+        expect(orderRepository).toBeInstanceOf(OrderRepository);
+    });
 
-        expect(userRepository).toBeInstanceOf(UserRepository)
-    })
-})
+    it('should return an instance of StorageRepository', async () => {
+        const storageRepository = await getSorageRepository(mockClient);
+        expect(storageRepository).toBeInstanceOf(StorageRepository);
+    });
+
+    it('should return an instance of EventsLogsRepository', async () => {
+        const eventsLogsRepository = await getEventsLogsRepository(mockClient);
+        expect(eventsLogsRepository).toBeInstanceOf(EventsLogsRepository);
+    });
+});

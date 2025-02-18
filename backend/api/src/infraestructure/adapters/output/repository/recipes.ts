@@ -19,16 +19,14 @@ export class RecipeRepository implements IRecipeRepository {
     }
 
     async getRandomRecipe(): Promise<Recipe> {
-        const res = await this.client.query(`
-            SELECT * FROM recipes ORDER BY RANDOM() LIMIT 1
-        `)
+        const res = await this.client.query(`SELECT * FROM recipes ORDER BY RANDOM() LIMIT 1`)
         return {
             id: parseInt(res.rows[0].id),
             name: res.rows[0].name
         }
     }
 
-    async getRecipeById(id: number): Promise<RecipeWithIngredients> {
+    async getRecipeById(id: number): Promise<RecipeWithIngredients | null> {
         const res = await this.client.query(
             `
             SELECT 
@@ -44,6 +42,9 @@ export class RecipeRepository implements IRecipeRepository {
         `,
             [id]
         )
+        if (res.rows.length === 0) {
+            return null
+        }
         const recipeIngredients = res.rows.map((row: any) => ({
             id: parseInt(row.ingredientid),
             name: row.ingredientname,

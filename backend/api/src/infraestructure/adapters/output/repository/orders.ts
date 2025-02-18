@@ -80,6 +80,9 @@ export class OrderRepository implements IOrderRepository {
             `,
             [id]
         )
+        if (res.rows.length === 0) {
+            return null
+        }
         return {
             id: parseInt(res.rows[0].orderid),
             recipe: {

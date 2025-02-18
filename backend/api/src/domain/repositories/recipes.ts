@@ -10,7 +10,7 @@ export class IRecipeRepository {
         throw new Error('Method not implemented.')
     }
 
-    async getRecipeById(id: number): Promise<RecipeWithIngredients> {
+    async getRecipeById(id: number): Promise<RecipeWithIngredients | null> {
         throw new Error('Method not implemented.')
     }
 

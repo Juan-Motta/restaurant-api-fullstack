@@ -19,7 +19,9 @@ export class RecipeRepository implements IRecipeRepository {
     }
 
     async getRandomRecipe(): Promise<Recipe> {
-        const res = await this.client.query(`SELECT * FROM recipes ORDER BY RANDOM() LIMIT 1`)
+        const res = await this.client.query(
+            `SELECT * FROM recipes ORDER BY RANDOM() LIMIT 1`
+        )
         return {
             id: parseInt(res.rows[0].id),
             name: res.rows[0].name

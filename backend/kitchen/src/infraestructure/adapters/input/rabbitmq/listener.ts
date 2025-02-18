@@ -16,7 +16,6 @@ export class RabbitMQListener {
     public async handler(message: CreateOrderMessage) {
         if (message.event === Events.PREPARE_ORDER) {
             Logger.info(`Preparing order ${message.data.orderId}`)
-            await this.delay(5000);
             const client = await db.connect()
             const eventsLogsRepository = await getEventsLogsRepository(client)
             try {

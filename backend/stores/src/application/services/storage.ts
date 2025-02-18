@@ -129,8 +129,8 @@ export class StorageService {
                 Math.abs(ingredient.shortageQuantity)
             )
         }
-        await this.notifyToKitchen(order.id as number)
         await this.orderRepository.updateStatus(orderId, OrderStatus.IN_KITCHEN)
+        await this.notifyToKitchen(order.id as number)
     }
 
     public async getAllIngredients() {

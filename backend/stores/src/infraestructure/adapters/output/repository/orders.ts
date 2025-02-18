@@ -45,6 +45,7 @@ export class OrderRepository implements IOrderRepository {
             'UPDATE orders SET status = $1 WHERE id = $2 RETURNING *',
             [status, id]
         )
+        await this.client.query('COMMIT')
         const res2 = await this.client.query(
             `
             SELECT 

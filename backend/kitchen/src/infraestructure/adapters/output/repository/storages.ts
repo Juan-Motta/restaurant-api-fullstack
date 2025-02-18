@@ -19,7 +19,8 @@ export class StorageRepository implements IStorageRepository {
     }
 
     async removeIngredientsFromStorage(recipeId: number): Promise<void> {
-        await this.client.query(`UPDATE storage SET quantity = CASE WHEN storage.quantity - ri.quantity < 0 THEN 0 ELSE storage.quantity - ri.quantity END FROM recipe_ingredients ri WHERE ri.recipe_id = $1 AND storage.ingredient_id = ri.ingredient_id;`,
+        await this.client.query(
+            `UPDATE storage SET quantity = CASE WHEN storage.quantity - ri.quantity < 0 THEN 0 ELSE storage.quantity - ri.quantity END FROM recipe_ingredients ri WHERE ri.recipe_id = $1 AND storage.ingredient_id = ri.ingredient_id;`,
             [recipeId]
         )
     }

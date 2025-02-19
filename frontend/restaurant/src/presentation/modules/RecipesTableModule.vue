@@ -55,16 +55,16 @@ onMounted(() => {
 
 <template>
   <div class="bg-white/50 py-5 px-5 border-shadow rounded-xl h-full flex flex-col">
-    <div class="mb-4 flex justify-between items-center">
-      <div class="gap-4 flex">
+    <div class="mb-4 flex justify-between items-center flex-col md:flex-row gap-4">
+      <div class="gap-4 flex flex-col md:flex-row w-full">
         <input type="text" v-model="idRecipeFilter" placeholder="Filter by recipe ID"
-          class="border rounded-lg py-1 px-2 border-gray-400 placeholder-gray-400 focus:border-[#00d6bcca] focus:outline-none focus:ring-0" />
+          class="border w-full rounded-lg py-1 px-2 border-gray-400 placeholder-gray-400 focus:border-[#00d6bcca] focus:outline-none focus:ring-0" />
         <input type="text" v-model="idRecipeNameFilter" placeholder="Filter by recipe name"
-          class="border rounded-lg py-1 px-2 border-gray-400 placeholder-gray-400 focus:border-[#00d6bcca] focus:outline-none focus:ring-0" />
+          class="border w-full rounded-lg py-1 px-2 border-gray-400 placeholder-gray-400 focus:border-[#00d6bcca] focus:outline-none focus:ring-0" />
       </div>
-      <div class="flex items-center h-full gap-4">
-        <button class="bg-[#00d6bcca] h-full px-6 rounded-lg cursor-pointer">Clear</button>
-        <button class="bg-[#00d6bcca] h-full px-6 rounded-lg cursor-pointer">Reload</button>
+      <div class="flex items-center h-full gap-4 w-full md:w-min flex-col sm:flex-row mt-5 mb-1 md:mt-0 md:mb-0">
+        <button class="bg-[#00d6bcca] h-full w-full md:w-min px-6 rounded-lg cursor-pointer">Clear</button>
+        <button class="bg-[#00d6bcca] h-full w-full md:w-min px-6 rounded-lg cursor-pointer">Reload</button>
       </div>
     </div>
 
@@ -74,21 +74,23 @@ onMounted(() => {
       <span class="text-[#e04b85] font-bold">Loading...</span>
     </div>
 
-    <div v-else class="flex-1 overflow-auto">
-      <table class="min-w-full border-collapse">
-        <thead>
-          <tr class="text-left">
-            <th class="pt-2 pb-6 px-4">Id</th>
-            <th class="pt-2 pb-6 px-4 hidden md:table-cell">Name</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="recipe in recipes" :key="recipe.id">
-            <td class="py-2 px-4">{{ recipe.id }}</td>
-            <td class="py-2 px-4 hidden md:table-cell">{{ recipe.name }}</td>
-          </tr>
-        </tbody>
-      </table>
+    <div v-else class="flex-1 mt-4 overflow-auto">
+      <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 gap-4">
+        <div class="bg-white shadow-md rounded-lg flex items-center" v-for="recipe in recipes" :key="recipe.id">
+          <div class="w-1/2 h-full">
+            <img :src="recipe.imageUrl" alt="Recipe Image" class="object-cover rounded-l-lg h-full" />
+          </div>
+          <div class="p-4 flex-1"> <!-- Add padding here instead -->
+            <h3 class="font-semibold text-lg">{{ recipe.name }}</h3>
+            <div>
+              <hr class="border-gray-200 mx-1 my-2">
+              <p v-for="ingredient in recipe.ingredients" :key="ingredient.id">
+                <span class="font-semibold">{{ ingredient.quantity }}</span> {{ ingredient.name }}
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
 
     <div class="mt-5 flex justify-between">

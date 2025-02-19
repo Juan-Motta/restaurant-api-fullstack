@@ -18,7 +18,7 @@
       <button class="w-full bg-red-500 text-white py-2 rounded-md hover:bg-red-600 transition duration-300 mt-4">Login
         with Google</button>
     </div>
-    <div class="md:w-1/2 bg-cover bg-center hidden md:flex" style="background-image: url('/chef.jpg');">
+    <div class="md:w-1/2 bg-cover bg-center hidden md:flex" style="background-image: url('/restaurant.webp');">
     </div>
   </div>
 </template>

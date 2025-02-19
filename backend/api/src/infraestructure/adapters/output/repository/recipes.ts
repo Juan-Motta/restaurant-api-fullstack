@@ -33,10 +33,12 @@ export class RecipeRepository implements IRecipeRepository {
             `
             SELECT 
                 r.id as recipeId, 
-                r.name as recipeName, 
+                r.name as recipeName,
+                r.image_url as recipeImageUrl, 
                 i.id as ingredientId, 
                 i.name as ingredientName, 
-                ri.quantity as ingredientQuantity 
+                ri.quantity as ingredientQuantity,
+                i.image_url as ingredientImageUrl
             FROM recipes r 
             JOIN recipe_ingredients ri ON r.id = ri.recipe_id 
             JOIN ingredients i ON ri.ingredient_id = i.id 
@@ -50,18 +52,32 @@ export class RecipeRepository implements IRecipeRepository {
         const recipeIngredients = res.rows.map((row: any) => ({
             id: parseInt(row.ingredientid),
             name: row.ingredientname,
-            quantity: row.ingredientquantity
+            quantity: row.ingredientquantity,
+            imageUrl: row.ingredientimageurl
         }))
         return {
             id: parseInt(res.rows[0].recipeid),
             name: res.rows[0].recipename,
+            imageUrl: res.rows[0].recipeimageurl,
             ingredients: recipeIngredients
         }
     }
 
-    async listAllRecipes(filters: RecipeFilter): Promise<Recipe[]> {
+    async listAllRecipes(
+        filters: RecipeFilter
+    ): Promise<RecipeWithIngredients[]> {
         let query = `
-            SELECT * FROM recipes r
+            SELECT
+                r.id AS recipeId,
+                r.name AS recipeName,
+                r.image_url AS recipeImageUrl,
+                json_agg(json_build_object('id', i.id, 'name', i.name, 'quantity', ri.quantity, 'image_url', i.image_url)) AS ingredients
+            FROM
+                recipes r
+            JOIN
+                recipe_ingredients ri ON r.id = ri.recipe_id
+            JOIN
+                ingredients i ON ri.ingredient_id = i.id
         `
         const conditions = []
         const params = []
@@ -86,13 +102,25 @@ export class RecipeRepository implements IRecipeRepository {
         const perPage = filters.perPage
         const offset = (page - 1) * perPage
 
+        query += ` GROUP BY r.id, r.name`
         query += ` LIMIT $${paramIndex++} OFFSET $${paramIndex++}`
 
         params.push(perPage, offset)
+
         const res = await this.client.query(query, params)
-        return res.rows.map((row: any) => ({
-            id: parseInt(row.id),
-            name: row.name
-        }))
+
+        return res.rows.map(
+            (row: {
+                recipeid: string
+                recipename: string
+                recipeimageurl: string
+                ingredients: { id: number; name: string; quantity: number }[]
+            }) => ({
+                id: parseInt(row.recipeid),
+                name: row.recipename,
+                imageUrl: row.recipeimageurl,
+                ingredients: row.ingredients
+            })
+        )
     }
 }

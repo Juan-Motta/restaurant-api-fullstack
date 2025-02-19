@@ -47,7 +47,6 @@ describe('listAllBuysController', () => {
         mockClient = {
             release: jest.fn()
         }
-
         ;(db.connect as jest.Mock).mockResolvedValue(mockClient)
     })
 

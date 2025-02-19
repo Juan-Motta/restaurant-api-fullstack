@@ -48,7 +48,6 @@ describe('Ingredients Controller', () => {
         mockClient = {
             release: jest.fn()
         }
-
         ;(db.connect as jest.Mock).mockResolvedValue(mockClient)
     })
 
@@ -73,7 +72,6 @@ describe('Ingredients Controller', () => {
             ;(IngredientFilterValidator.validate as jest.Mock).mockReturnValue(
                 mockFilters
             )
-
             ;(getAuthService as jest.Mock).mockResolvedValue(mockAuthService)
             ;(getStorageService as jest.Mock).mockResolvedValue(
                 mockStorageService

@@ -7,4 +7,5 @@ export interface Buy {
         name: string
     }
     quantity: number
+    createdAt: Date
 }

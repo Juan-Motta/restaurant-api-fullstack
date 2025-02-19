@@ -52,7 +52,6 @@ describe('Recipes Controllers', () => {
         mockClient = {
             release: jest.fn()
         }
-
         ;(db.connect as jest.Mock).mockResolvedValue(mockClient)
     })
 
@@ -66,17 +65,14 @@ describe('Recipes Controllers', () => {
                 verifyHeader: jest.fn()
             }
             const mockRecipesService = {
-                getRecipeById: jest
-                    .fn()
-                    .mockResolvedValue({
-                        id: 1,
-                        name: 'Pasta',
-                        ingredients: []
-                    })
+                getRecipeById: jest.fn().mockResolvedValue({
+                    id: 1,
+                    name: 'Pasta',
+                    ingredients: []
+                })
             }
 
             ;(req.params as Record<string, string>).id = '1'
-
             ;(getAuthService as jest.Mock).mockResolvedValue(mockAuthService)
             ;(getRecipesService as jest.Mock).mockResolvedValue(
                 mockRecipesService
@@ -144,7 +140,6 @@ describe('Recipes Controllers', () => {
             ;(RecipeFilterValidator.validate as jest.Mock).mockReturnValue(
                 mockFilters
             )
-
             ;(getAuthService as jest.Mock).mockResolvedValue(mockAuthService)
             ;(getRecipesService as jest.Mock).mockResolvedValue(
                 mockRecipesService

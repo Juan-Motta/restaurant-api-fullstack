@@ -21,7 +21,8 @@ export class BuysRepository implements IBuysRepository {
                 b.id as buyId, 
                 b.quantity as buyQuantity, 
                 i.id as ingredientId, 
-                i.name as ingredientName 
+                i.name as ingredientName,
+                b.created_at as buyCreatedAt
             FROM buys b 
             JOIN ingredients i ON i.id = b.ingredient_id
         `
@@ -64,7 +65,8 @@ export class BuysRepository implements IBuysRepository {
                 id: parseInt(row.ingredientid),
                 name: row.ingredientname as string
             },
-            quantity: parseInt(row.buyquantity)
+            quantity: parseInt(row.buyquantity),
+            createdAt: row.buycreatedat
         }))
     }
 }

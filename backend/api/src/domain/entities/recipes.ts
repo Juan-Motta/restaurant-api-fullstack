@@ -6,6 +6,7 @@ export interface Recipe {
 export interface RecipeWithIngredients {
     id?: number
     name: string
+    imageUrl: string
     ingredients: {
         id: number
         name: string

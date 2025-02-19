@@ -20,7 +20,8 @@ export const StorageModel = {
         id serial primary key,
         ingredient_id integer
         references ingredients,
-        quantity integer not null
+        quantity integer not null,
+        created_at timestamp default CURRENT_TIMESTAMP
     );
     `
 }
@@ -31,7 +32,8 @@ export const RecipesModel = {
     CREATE TABLE recipes
     (
         id serial primary key,
-        name varchar not null
+        name varchar not null,
+        image_url varchar
     );
     `
 }
@@ -70,7 +72,8 @@ export const IngredientsModel = {
     CREATE TABLE ingredients
     (
         id serial primary key,
-        name varchar not null
+        name varchar not null,
+        image_url varchar,
     );
     `
 }

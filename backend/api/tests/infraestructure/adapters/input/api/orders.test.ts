@@ -53,7 +53,6 @@ describe('Order Controllers', () => {
         mockClient = {
             release: jest.fn()
         }
-
         ;(db.connect as jest.Mock).mockResolvedValue(mockClient)
     })
 
@@ -95,14 +94,12 @@ describe('Order Controllers', () => {
                 verifyHeader: jest.fn()
             }
             const mockOrderService = {
-                listAllOrders: jest
-                    .fn()
-                    .mockResolvedValue({
-                        data: [],
-                        page: 1,
-                        perPage: 10,
-                        total: 0
-                    })
+                listAllOrders: jest.fn().mockResolvedValue({
+                    data: [],
+                    page: 1,
+                    perPage: 10,
+                    total: 0
+                })
             }
 
             ;(getAuthService as jest.Mock).mockResolvedValue(mockAuthService)
@@ -138,7 +135,6 @@ describe('Order Controllers', () => {
             }
 
             ;(req.params as Record<string, string>).id = '1'
-
             ;(getAuthService as jest.Mock).mockResolvedValue(mockAuthService)
             ;(getOrderService as jest.Mock).mockResolvedValue(mockOrderService)
 

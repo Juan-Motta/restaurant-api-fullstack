@@ -1,5 +1,14 @@
 import { db } from '../../output/database'
-import { UsersModel, StorageModel, RecipesModel, RecipeIngredientsModel, OrdersModel, IngredientsModel, EventLogsModel, BuysModel } from './scripts'
+import {
+    UsersModel,
+    StorageModel,
+    RecipesModel,
+    RecipeIngredientsModel,
+    OrdersModel,
+    IngredientsModel,
+    EventLogsModel,
+    BuysModel
+} from './scripts'
 import Logger from '../../../config/logger'
 
 export async function migrate(model: {

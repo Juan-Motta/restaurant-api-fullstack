@@ -20,7 +20,8 @@ export class StorageRepository implements IStorageRepository {
             SELECT 
                 i.id as ingredientId, 
                 i.name as ingredientName, 
-                s.quantity as ingredientQuantity 
+                s.quantity as ingredientQuantity,
+                i.image_url as ingredientImageUrl
             FROM ingredients i 
             JOIN storage s ON s.ingredient_id = i.id
         `
@@ -54,7 +55,8 @@ export class StorageRepository implements IStorageRepository {
         return res.rows.map((row) => ({
             id: row.ingredientid,
             name: row.ingredientname,
-            quantity: row.ingredientquantity
+            quantity: row.ingredientquantity,
+            imageUrl: row.ingredientimageurl
         }))
     }
 }

@@ -10,13 +10,15 @@ CREATE TABLE IF NOT EXISTS users
 CREATE TABLE IF NOT EXISTS ingredients
 (
 	id serial primary key,
-	name varchar not null
+	name varchar not null,
+	image_url varchar
 );
 
 CREATE TABLE IF NOT EXISTS recipes
 (
 	id serial primary key,
-	name varchar not null
+	name varchar not null,
+	image_url varchar
 );
 
 CREATE TABLE IF NOT EXISTS storage
@@ -24,7 +26,8 @@ CREATE TABLE IF NOT EXISTS storage
 	id serial primary key,
 	ingredient_id integer
 	references ingredients,
-	quantity integer not null
+	quantity integer not null,
+	created_at timestamp default CURRENT_TIMESTAMP
 );
 
 CREATE TABLE IF NOT EXISTS recipe_ingredients
@@ -64,28 +67,28 @@ CREATE TABLE IF NOT EXISTS buys
 	created_at timestamp default CURRENT_TIMESTAMP
 );
 
-INSERT INTO recipes (id, name) VALUES
-    (1, 'Cheesy Chicken and Rice Casserole'),
-    (2, 'Tomato and Onion Stuffed Potatoes'),
-    (3, 'Lemon Herb Grilled Chicken Salad'),
-    (4, 'Ketchup Glazed Meatballs with Rice'),
-    (5, 'Chicken and Rice Skillet with Lemon and Tomato'),
-    (6, 'Lettuce Wraps with Spiced Meat and Ketchup')
+INSERT INTO recipes (id, name, image_url) VALUES
+    (1, 'Cheesy Chicken and Rice Casserole', '/cheesy_chicken_and_rice_casserole_min.webp'),
+    (2, 'Tomato and Onion Stuffed Potatoes', '/tomato_and_onion_stuffed_potatoes_min.webp'),
+    (3, 'Lemon Herb Grilled Chicken Salad', '/lemon_herb_grilled_chicken_salad_min.webp'),
+    (4, 'Ketchup Glazed Meatballs with Rice', '/ketchup_glazed_meatballs_with_rice_min.webp'),
+    (5, 'Chicken and Rice Skillet with Lemon and Tomato', '/chicken_and_rice_skillet_with_lemon_and_tomato_min.webp'),
+    (6, 'Lettuce Wraps with Spiced Meat and Ketchup', '/lettuce_wraps_with_spiced_meat_and_ketchup_min.webp')
 ON CONFLICT DO NOTHING;
 
 ALTER SEQUENCE recipes_id_seq RESTART WITH 7;
 
-INSERT INTO ingredients (id, name) VALUES
-    (1, 'tomato'),
-    (2, 'lemon'),
-    (3, 'potato'),
-    (4, 'rice'),
-    (5, 'ketchup'),
-    (6, 'lettuce'),
-    (7, 'onion'),
-    (8, 'cheese'),
-    (9, 'meat'),
-    (10, 'chicken')
+INSERT INTO ingredients (id, name, image_url) VALUES
+    (1, 'tomato', '/tomato_min.webp'),
+    (2, 'lemon', '/lemon_min.webp'),
+    (3, 'potato', '/potato_min.webp'),
+    (4, 'rice', '/rice_min.webp'),
+    (5, 'ketchup', '/ketchup_min.webp'),
+    (6, 'lettuce', '/lettuce_min.webp'),
+    (7, 'onion', '/onion_min.webp'),
+    (8, 'cheese', '/cheese_min.webp'),
+    (9, 'meat', '/meat_min.webp'),
+    (10, 'chicken', '/chicken_min.webp')
 ON CONFLICT DO NOTHING;
 
 ALTER SEQUENCE ingredients_id_seq RESTART WITH 11;

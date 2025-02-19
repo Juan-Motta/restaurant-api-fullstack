@@ -33,27 +33,27 @@ const handleCreateOrder = async () => {
 <template>
   <div class="bg-white/50 py-8 px-5 border-shadow rounded-xl h-full flex flex-col items-center">
     <!-- Stats Cards -->
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8 w-full">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4 mb-8 w-full">
       <div class="bg-white rounded-lg shadow p-4">
-        <h3 class="text-lg font-bold mb-4 text-green-600">Orders Created</h3>
+        <h3 class="text-lg font-bold mb-4 text-green-600 text-center">Orders Created</h3>
         <p class="text-4xl text-center">{{ ordersCreated }}</p>
       </div>
-      <div class="bg-white rounded-lg shadow p-4">
+      <div class="bg-white rounded-lg shadow p-4 text-center">
         <h3 class="text-lg font-bold mb-4 text-blue-600">Orders Prepared</h3>
         <p class="text-4xl text-center">{{ ordersPrepared }}</p>
       </div>
-      <div class="bg-white rounded-lg shadow p-4">
+      <div class="bg-white rounded-lg shadow p-4 text-center">
         <h3 class="text-lg font-bold mb-4 text-yellow-500">Orders in Kitchen</h3>
         <p class="text-4xl text-center">{{ ordersInKitchen }}</p>
       </div>
-      <div class="bg-white rounded-lg shadow p-4">
+      <div class="bg-white rounded-lg shadow p-4 text-center">
         <h3 class="text-lg font-bold mb-4 text-">Orders Finished</h3>
         <p class="text-4xl text-center">{{ ordersFinished }}</p>
       </div>
     </div>
 
     <!-- Button Section -->
-    <div class="h-full flex items-center">
+    <div class="h-full flex items-center flex-col justify-center">
       <button @click="handleCreateOrder" :disabled="isLoading"
         class="px-6 py-3 bg-blue-500 text-white font-semibold rounded-lg shadow-md hover:bg-blue-600 transition duration-200 disabled:opacity-50">
         <span v-if="isLoading">Creating...</span>

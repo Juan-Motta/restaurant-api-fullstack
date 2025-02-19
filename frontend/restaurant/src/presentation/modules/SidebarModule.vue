@@ -19,35 +19,35 @@
           activeClass="bg-[#00d6bcca] border-shadow">
           <span class="mr-2">
             <OrderIcon />
-          </span>Realiza una orden
+          </span>Take an order
         </RouterLink>
         <RouterLink to="/recipes"
           class="flex mx-3 my-1 px-3 py-2 text-sm font-medium text-gray-900 rounded-lg hover:bg-gray-200 items-center"
           activeClass="bg-[#00d6bcca] border-shadow">
           <span class="mr-2">
             <AppleIcon />
-          </span> Recetas
+          </span> Recipes
         </RouterLink>
         <RouterLink to="/storage"
           class="flex mx-3 px-3 my-1 py-2 text-sm font-medium text-gray-900 rounded-lg hover:bg-gray-200 items-center"
           activeClass="bg-[#00d6bcca] border-shadow">
           <span class="mr-2">
             <StoreIcon />
-          </span>Bodega
+          </span>Storage Items
         </RouterLink>
         <RouterLink to="/orders"
           class="flex mx-3 px-3 py-2 my-1 text-sm font-medium text-gray-900 rounded-lg hover:bg-gray-200 items-center"
           activeClass="bg-[#00d6bcca] border-shadow">
           <span class="mr-2">
             <CoinIcon />
-          </span>Historial de pedidos
+          </span>Historical orders
         </RouterLink>
         <RouterLink to="/buys"
           class="flex mx-3 px-3 py-2 my-1 text-sm font-medium text-gray-900 rounded-lg hover:bg-gray-200 items-center"
           activeClass="bg-[#00d6bcca] border-shadow">
           <span class="mr-2">
             <CartIcon />
-          </span>Historial de compras
+          </span>Historical buys
         </RouterLink>
       </nav>
       <hr class="border-gray-200 mx-5">
@@ -55,7 +55,7 @@
         <div class="flex items-center">
           <img class="w-8 h-8 rounded-full" src="/avatar.jpg" alt="User avatar">
           <div class="ml-4">
-            <p class="text-sm font-medium text-gray-700">Username</p>
+            <p class="text-sm font-medium text-gray-700">{{ getUserData().name }}</p>
             <button @click="logout" class="text-xs font-medium text-gray-500 hover:text-gray-700">Logout</button>
           </div>
         </div>
@@ -73,12 +73,15 @@ import StoreIcon from '@/presentation/icons/StoreIcon.vue';
 import CoinIcon from '@/presentation/icons/CoinIcon.vue';
 import CartIcon from '@/presentation/icons/CartIcon.vue';
 import RestaurantIcon from '@/presentation/icons/RestaurantIcon.vue';
+import { useUserStore } from '@/stores/user'
 
 defineProps({
   isSidebarOpen: Boolean,
 });
 
 const router = useRouter();
+const { getUserData } = useUserStore();
+
 
 const logout = () => {
   localStorage.removeItem('jwt');

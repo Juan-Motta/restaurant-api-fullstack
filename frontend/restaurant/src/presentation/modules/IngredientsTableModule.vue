@@ -31,7 +31,6 @@ const fetchOrders = async (page: number) => {
     const data = await getAllIngredients(params.page, params.perPage, params.ingredientId, params.ingredientName);
     ingredients.value = data.data;
     totalOrders.value = data.total;
-    console.log(ingredients.value);
   } catch (error) {
     console.error('Error fetching orders:', error);
   } finally {
@@ -52,6 +51,17 @@ watch([idIngredientFilter, idIngredientNameFilter], () => {
 onMounted(() => {
   fetchOrders(currentPage.value);
 });
+
+const clearFilters = () => {
+  idIngredientFilter.value = '';
+  idIngredientNameFilter.value = '';
+  currentPage.value = 1;
+  fetchOrders(currentPage.value);
+}
+
+const reload = () => {
+  fetchOrders(currentPage.value);
+}
 </script>
 
 <template>
@@ -64,8 +74,10 @@ onMounted(() => {
           class="border w-full rounded-lg py-1 px-2 border-gray-400 placeholder-gray-400 focus:border-[#00d6bcca] focus:outline-none focus:ring-0" />
       </div>
       <div class="flex items-center h-full gap-4 w-full md:w-min flex-col sm:flex-row mt-5 mb-1 md:mt-0 md:mb-0">
-        <button class="bg-[#00d6bcca] h-full w-full md:w-min px-6 rounded-lg cursor-pointer">Clear</button>
-        <button class="bg-[#00d6bcca] h-full w-full md:w-min px-6 rounded-lg cursor-pointer">Reload</button>
+        <button class="bg-[#00d6bcca] h-full w-full md:w-min px-6 rounded-lg cursor-pointer"
+          @click="clearFilters">Clear</button>
+        <button class="bg-[#00d6bcca] h-full w-full md:w-min px-6 rounded-lg cursor-pointer"
+          @click="reload">Reload</button>
       </div>
     </div>
 
@@ -77,7 +89,7 @@ onMounted(() => {
 
 
     <div v-else class="flex-1 mt-4 overflow-auto">
-      <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 gap-4">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
         <div class="bg-white shadow-md rounded-lg flex items-center" v-for="ingredient in ingredients"
           :key="ingredient.id">
           <div class="w-1/2 h-full">

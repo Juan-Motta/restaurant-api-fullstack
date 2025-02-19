@@ -55,6 +55,18 @@ watch([idBuyFilter, idIngredientFilter, idIngredientNameFilter], () => {
 onMounted(() => {
   fetchOrders(currentPage.value);
 });
+
+const clearFilters = () => {
+  idBuyFilter.value = '';
+  idIngredientFilter.value = '';
+  idIngredientNameFilter.value = '';
+  currentPage.value = 1;
+  fetchOrders(currentPage.value);
+}
+
+const reload = () => {
+  fetchOrders(currentPage.value);
+}
 </script>
 
 <template>
@@ -69,8 +81,10 @@ onMounted(() => {
           class="border w-full rounded-lg py-1 px-2 border-gray-400 placeholder-gray-400 focus:border-[#00d6bcca] focus:outline-none focus:ring-0" />
       </div>
       <div class="flex items-center h-full gap-4 w-full md:w-min flex-col sm:flex-row mt-5 mb-1 md:mt-0 md:mb-0">
-        <button class="bg-[#00d6bcca] h-full w-full md:w-min px-6 rounded-lg cursor-pointer">Clear</button>
-        <button class="bg-[#00d6bcca] h-full w-full md:w-min px-6 rounded-lg cursor-pointer">Reload</button>
+        <button class="bg-[#00d6bcca] h-full w-full md:w-min px-6 rounded-lg cursor-pointer"
+          @click="clearFilters">Clear</button>
+        <button class="bg-[#00d6bcca] h-full w-full md:w-min px-6 rounded-lg cursor-pointer"
+          @click="reload">Reload</button>
       </div>
     </div>
 

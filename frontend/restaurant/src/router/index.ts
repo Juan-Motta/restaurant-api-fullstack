@@ -66,12 +66,11 @@ router.beforeEach((to, from, next) => {
 
   const isTokenValid = (token: string) => {
     if (!token) return false
-
     try {
       const decodedToken: { userId: number; userName: string; userEmail: string; exp: number } =
         jwtDecode(token)
-      const currentTime = Date.now() / 1000 // Current time in seconds
-      if (!decodedToken.exp) return false // If exp is not present
+      const currentTime = Date.now() / 1000
+      if (!decodedToken.exp) return false
       if (decodedToken.exp < currentTime) {
         clearUserData()
         return false
@@ -83,20 +82,18 @@ router.beforeEach((to, from, next) => {
       return false
     }
   }
-
   const isAuthenticated = jwtToken && isTokenValid(jwtToken)
-  console.log('isAuthenticated', isAuthenticated)
-  console.log(to.path)
-
   if (to.path === '/login') {
     if (isAuthenticated) {
       next({ path: '/take-order' })
     } else {
-      next({ path: '/login' })
+      next()
     }
   } else if (to.matched.some((record) => record.meta.requiresAuth) && !isAuthenticated) {
+    localStorage.removeItem('jwt')
+    clearUserData()
     next({ path: '/login' })
-  } else if (jwtToken && !isAuthenticated) {
+  } else if (!jwtToken || !isAuthenticated) {
     localStorage.removeItem('jwt')
     clearUserData()
     next({ path: '/login' })

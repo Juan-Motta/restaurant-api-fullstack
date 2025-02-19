@@ -117,12 +117,12 @@ const reload = () => {
 
     <div class="mt-5 flex justify-between">
       <button @click="changePage(currentPage - 1)" :disabled="currentPage === 1"
-        class="px-4 py-2 bg-gray-300 rounded disabled:opacity-50">
+        class="px-4 py-2 bg-gray-300 rounded disabled:opacity-50 cursor-pointer">
         Previous
       </button>
       <span class="self-center">Page {{ currentPage }}</span>
       <button @click="changePage(currentPage + 1)" :disabled="(currentPage * ordersPerPage) >= totalOrders"
-        class="px-4 py-2 bg-gray-300 rounded disabled:opacity-50">
+        class="px-4 py-2 bg-gray-300 rounded disabled:opacity-50 cursor-pointer">
         Next
       </button>
     </div>

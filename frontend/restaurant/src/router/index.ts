@@ -5,6 +5,7 @@ import BuyView from '@/presentation/views/BuyView.vue'
 import OrderView from '@/presentation/views/OrderView.vue'
 import StoreView from '@/presentation/views/StoreView.vue'
 import RecipesView from '@/presentation/views/RecipesView.vue'
+import NotFoundView from '@/presentation/views/NotFoundView.vue'
 import { jwtDecode } from 'jwt-decode'
 import { useUserStore } from '@/stores/user'
 
@@ -51,6 +52,11 @@ const router = createRouter({
       component: RecipesView,
       meta: { title: 'Recipes' },
     },
+    {
+      path: '/:pathMatch(.*)*',
+      name: 'NotFound',
+      component: NotFoundView,
+    },
   ],
 })
 
@@ -64,8 +70,8 @@ router.beforeEach((to, from, next) => {
     try {
       const decodedToken: { userId: number; userName: string; userEmail: string; exp: number } =
         jwtDecode(token)
-      const currentTime = Date.now() / 1000
-      if (!decodedToken.exp) return false
+      const currentTime = Date.now() / 1000 // Current time in seconds
+      if (!decodedToken.exp) return false // If exp is not present
       if (decodedToken.exp < currentTime) {
         clearUserData()
         return false
@@ -79,13 +85,21 @@ router.beforeEach((to, from, next) => {
   }
 
   const isAuthenticated = jwtToken && isTokenValid(jwtToken)
+  console.log('isAuthenticated', isAuthenticated)
+  console.log(to.path)
 
-  if (to.matched.some((record) => record.meta.requiresAuth) && !isAuthenticated) {
-    next({ path: '/' })
+  if (to.path === '/login') {
+    if (isAuthenticated) {
+      next({ path: '/take-order' })
+    } else {
+      next({ path: '/login' })
+    }
+  } else if (to.matched.some((record) => record.meta.requiresAuth) && !isAuthenticated) {
+    next({ path: '/login' })
   } else if (jwtToken && !isAuthenticated) {
     localStorage.removeItem('jwt')
     clearUserData()
-    next({ path: '/' })
+    next({ path: '/login' })
   } else {
     next()
   }

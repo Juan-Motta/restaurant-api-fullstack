@@ -55,7 +55,7 @@ const handleCreateOrder = async () => {
     <!-- Button Section -->
     <div class="h-full flex items-center flex-col justify-center">
       <button @click="handleCreateOrder" :disabled="isLoading"
-        class="px-6 py-3 bg-blue-500 text-white font-semibold rounded-lg shadow-md hover:bg-blue-600 transition duration-200 disabled:opacity-50">
+        class="px-6 py-3 bg-[#0eb3a0ca] hover:bg-[#67cec2ca] text-white font-semibold rounded-lg shadow-md transition duration-200 disabled:opacity-50 cursor-pointer">
         <span v-if="isLoading">Creating...</span>
         <span v-else>Create an Order</span>
       </button>

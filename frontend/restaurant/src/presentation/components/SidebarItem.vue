@@ -1,8 +1,15 @@
 <script setup lang="ts">
+import { useRouter } from 'vue-router';
+
+const router = useRouter();
 
 defineProps({
   isSidebarOpen: Boolean,
 })
+
+const redirectHome = () => {
+  router.push('/');
+}
 
 </script>
 
@@ -13,7 +20,7 @@ defineProps({
     { 'translate-x-0': isSidebarOpen, '-translate-x-full': !isSidebarOpen }
   ]">
     <div class="mt-4 mb-4 flex flex-none justify-center">
-      <h1 class="text-lg font-semibold text-gray-900 text-center">Restaurant</h1>
+      <h1 class="text-lg font-semibold text-gray-900 text-center" @click="redirectHome">Restaurant</h1>
     </div>
     <div class="flex flex-col grow">
       <nav class="flex-1 px-2 py-4 overflow-y-auto">
@@ -36,7 +43,7 @@ defineProps({
           <div class="ml-3">
             <p class="text-sm font-medium text-gray-700">Username</p>
             <button @click="$emit('logout')"
-              class="text-xs font-medium text-gray-500 hover:text-gray-700">Logout</button>
+              class="text-xs font-medium text-gray-500 hover:text-gray-700 cursor-pointer">Logout</button>
           </div>
         </div>
       </div>

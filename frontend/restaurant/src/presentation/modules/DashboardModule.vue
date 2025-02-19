@@ -2,6 +2,12 @@
 import { ref } from 'vue';
 import { createOrder } from '@/services/orders';
 
+// Sample stats (These would come from your state management or API in a real scenario)
+const ordersCreated = ref(25);
+const ordersPrepared = ref(10);
+const ordersInKitchen = ref(5);
+const ordersFinished = ref(15);
+
 const isLoading = ref(false);
 const errorMessage = ref<string | null>(null);
 const successMessage = ref<string | null>(null);
@@ -25,19 +31,40 @@ const handleCreateOrder = async () => {
 </script>
 
 <template>
-  <div class="bg-white/50 py-8 px-5 border-shadow rounded-xl h-full flex flex-col">
-    <div class="flex items-center justify-center h-screen">
-      <div class="text-center">
-        <button @click="handleCreateOrder" :disabled="isLoading"
-          class="px-6 py-3 bg-blue-500 text-white font-semibold rounded-lg shadow-md hover:bg-blue-600 transition duration-200 disabled:opacity-50">
-          <span v-if="isLoading">Creating...</span>
-          <span v-else>Create an Order</span>
-        </button>
-        <div v-if="successMessage" class="text-green-500 mt-4">{{ successMessage }}</div>
-        <div v-if="errorMessage" class="text-red-500 mt-4">{{ errorMessage }}</div>
+  <div class="bg-white/50 py-8 px-5 border-shadow rounded-xl h-full flex flex-col items-center">
+    <!-- Stats Cards -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8 w-full">
+      <div class="bg-white rounded-lg shadow p-4">
+        <h3 class="text-lg font-bold mb-4 text-green-600">Orders Created</h3>
+        <p class="text-4xl text-center">{{ ordersCreated }}</p>
       </div>
+      <div class="bg-white rounded-lg shadow p-4">
+        <h3 class="text-lg font-bold mb-4 text-blue-600">Orders Prepared</h3>
+        <p class="text-4xl text-center">{{ ordersPrepared }}</p>
+      </div>
+      <div class="bg-white rounded-lg shadow p-4">
+        <h3 class="text-lg font-bold mb-4 text-yellow-500">Orders in Kitchen</h3>
+        <p class="text-4xl text-center">{{ ordersInKitchen }}</p>
+      </div>
+      <div class="bg-white rounded-lg shadow p-4">
+        <h3 class="text-lg font-bold mb-4 text-">Orders Finished</h3>
+        <p class="text-4xl text-center">{{ ordersFinished }}</p>
+      </div>
+    </div>
+
+    <!-- Button Section -->
+    <div class="h-full flex items-center">
+      <button @click="handleCreateOrder" :disabled="isLoading"
+        class="px-6 py-3 bg-blue-500 text-white font-semibold rounded-lg shadow-md hover:bg-blue-600 transition duration-200 disabled:opacity-50">
+        <span v-if="isLoading">Creating...</span>
+        <span v-else>Create an Order</span>
+      </button>
+      <div v-if="successMessage" class="text-green-500 mt-4">{{ successMessage }}</div>
+      <div v-if="errorMessage" class="text-red-500 mt-4">{{ errorMessage }}</div>
     </div>
   </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+/* Add any additional styles here */
+</style>

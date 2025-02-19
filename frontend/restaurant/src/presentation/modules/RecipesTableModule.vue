@@ -54,12 +54,21 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="bg-white/50 py-8 px-5 border-shadow rounded-xl h-full flex flex-col">
-    <div class="mb-4">
-      <input type="text" v-model="idRecipeFilter" placeholder="Filter by recipe ID" class="border rounded p-2 mr-2" />
-      <input type="text" v-model="idRecipeNameFilter" placeholder="Filter by recipe name"
-        class="border rounded p-2 mr-2" />
+  <div class="bg-white/50 py-5 px-5 border-shadow rounded-xl h-full flex flex-col">
+    <div class="mb-4 flex justify-between items-center">
+      <div class="gap-4 flex">
+        <input type="text" v-model="idRecipeFilter" placeholder="Filter by recipe ID"
+          class="border rounded-lg py-1 px-2 border-gray-400 placeholder-gray-400 focus:border-[#00d6bcca] focus:outline-none focus:ring-0" />
+        <input type="text" v-model="idRecipeNameFilter" placeholder="Filter by recipe name"
+          class="border rounded-lg py-1 px-2 border-gray-400 placeholder-gray-400 focus:border-[#00d6bcca] focus:outline-none focus:ring-0" />
+      </div>
+      <div class="flex items-center h-full gap-4">
+        <button class="bg-[#00d6bcca] h-full px-6 rounded-lg cursor-pointer">Clear</button>
+        <button class="bg-[#00d6bcca] h-full px-6 rounded-lg cursor-pointer">Reload</button>
+      </div>
     </div>
+
+    <hr class="border-gray-200 mx-1">
 
     <div v-if="isLoading" class="flex items-center justify-center h-32">
       <span class="text-[#e04b85] font-bold">Loading...</span>

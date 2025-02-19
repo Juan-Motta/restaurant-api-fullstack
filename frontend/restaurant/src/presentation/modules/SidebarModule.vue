@@ -4,28 +4,57 @@
     { 'translate-x-0': isSidebarOpen, '-translate-x-full': !isSidebarOpen }
   ]">
     <div class="mt-4 mb-4 flex flex-none justify-center">
-      <h1 class="text-lg font-semibold text-gray-900 text-center">Restaurant</h1>
+      <div class="flex w-full items-center justify-baseline ml-8">
+        <span class="mr-4">
+          <RestaurantIcon />
+        </span>
+        <h1 class="text-lg font-semibold text-[#] text-center">Restaurant App</h1>
+      </div>
     </div>
+    <hr class="border-gray-200 mx-5">
     <div class="flex flex-col grow">
       <nav class="flex-1 px-2 py-4 overflow-y-auto">
         <RouterLink to="/take-order"
-          class="block px-6 py-2 text-sm font-medium text-gray-900 rounded-lg hover:bg-gray-200">
-          Realiza una orden</RouterLink>
+          class="flex my-1 mx-3 px-3 py-2 text-sm font-medium text-gray-900 rounded-lg hover:bg-gray-200 items-center"
+          activeClass="bg-[#00d6bcca] border-shadow">
+          <span class="mr-2">
+            <OrderIcon />
+          </span>Realiza una orden
+        </RouterLink>
         <RouterLink to="/recipes"
-          class="block px-6 py-2 text-sm font-medium text-gray-900 rounded-lg hover:bg-gray-200">
-          Recetas</RouterLink>
+          class="flex mx-3 my-1 px-3 py-2 text-sm font-medium text-gray-900 rounded-lg hover:bg-gray-200 items-center"
+          activeClass="bg-[#00d6bcca] border-shadow">
+          <span class="mr-2">
+            <AppleIcon />
+          </span> Recetas
+        </RouterLink>
         <RouterLink to="/storage"
-          class="block px-6 py-2 text-sm font-medium text-gray-900 rounded-lg hover:bg-gray-200">
-          Bodega</RouterLink>
-        <RouterLink to="/orders" class="block px-6 py-2 text-sm font-medium text-gray-900 rounded-lg hover:bg-gray-200">
-          Historial de pedidos</RouterLink>
-        <RouterLink to="/buys" class="block px-6 py-2 text-sm font-medium text-gray-900 rounded-lg hover:bg-gray-200">
-          Historial de compras</RouterLink>
+          class="flex mx-3 px-3 my-1 py-2 text-sm font-medium text-gray-900 rounded-lg hover:bg-gray-200 items-center"
+          activeClass="bg-[#00d6bcca] border-shadow">
+          <span class="mr-2">
+            <StoreIcon />
+          </span>Bodega
+        </RouterLink>
+        <RouterLink to="/orders"
+          class="flex mx-3 px-3 py-2 my-1 text-sm font-medium text-gray-900 rounded-lg hover:bg-gray-200 items-center"
+          activeClass="bg-[#00d6bcca] border-shadow">
+          <span class="mr-2">
+            <CoinIcon />
+          </span>Historial de pedidos
+        </RouterLink>
+        <RouterLink to="/buys"
+          class="flex mx-3 px-3 py-2 my-1 text-sm font-medium text-gray-900 rounded-lg hover:bg-gray-200 items-center"
+          activeClass="bg-[#00d6bcca] border-shadow">
+          <span class="mr-2">
+            <CartIcon />
+          </span>Historial de compras
+        </RouterLink>
       </nav>
-      <div class="p-4 border-t border-gray-200 flex-none">
+      <hr class="border-gray-200 mx-5">
+      <div class="py-4 px-6 flex-none">
         <div class="flex items-center">
-          <img class="w-8 h-8 rounded-full" src="/public/favicon.ico" alt="User avatar">
-          <div class="ml-3">
+          <img class="w-8 h-8 rounded-full" src="/avatar.jpg" alt="User avatar">
+          <div class="ml-4">
             <p class="text-sm font-medium text-gray-700">Username</p>
             <button @click="logout" class="text-xs font-medium text-gray-500 hover:text-gray-700">Logout</button>
           </div>
@@ -38,6 +67,12 @@
 <script setup lang="ts">
 import { defineProps } from 'vue';
 import { useRouter } from 'vue-router';
+import OrderIcon from '@/presentation/icons/OrderIcon.vue';
+import AppleIcon from '@/presentation/icons/AppleIcon.vue';
+import StoreIcon from '@/presentation/icons/StoreIcon.vue';
+import CoinIcon from '@/presentation/icons/CoinIcon.vue';
+import CartIcon from '@/presentation/icons/CartIcon.vue';
+import RestaurantIcon from '@/presentation/icons/RestaurantIcon.vue';
 
 defineProps({
   isSidebarOpen: Boolean,

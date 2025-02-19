@@ -12,6 +12,7 @@
         </button>
       </div>
     </div>
+    <hr class="border-gray-300 mx-8">
   </header>
 </template>
 

@@ -70,8 +70,8 @@ onMounted(() => {
 
     <hr class="border-gray-200 mx-1">
 
-    <div v-if="isLoading" class="flex items-center justify-center h-32">
-      <span class="text-[#e04b85] font-bold">Loading...</span>
+    <div v-if="isLoading" class="flex items-center justify-center h-full">
+      <span class="font-bold text-xl">Loading...</span>
     </div>
 
     <div v-else class="flex-1 mt-4 overflow-auto">

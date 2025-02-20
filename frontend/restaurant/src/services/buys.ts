@@ -1,12 +1,13 @@
 import axios from 'axios'
+import { type Buy } from '@/types/buys'
 
 export const getAllBuys = async (
   page: number,
   perPage: number,
-  buyId?: number,
-  ingredientId?: string,
-  ingredientName?: string,
-) => {
+  buyId?: string | number,
+  ingredientId?: string | number,
+  ingredientName?: string | number,
+): Promise<{ data: Buy[]; page: number; perPage: number; total: number }> => {
   const token = localStorage.getItem('jwt')
   let url = `${import.meta.env.VITE_API_URL}/buys?page=${page}&perPage=${perPage}`
   if (buyId) {

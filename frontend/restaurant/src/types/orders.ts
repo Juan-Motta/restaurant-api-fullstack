@@ -1,11 +1,11 @@
-import { type Recipe } from './recipes'
-
 export interface Order {
   id: number
-  name?: string
-  date: string
-  recipe: Recipe
+  recipe: {
+    id: number
+    name: string
+  }
   status: OrderStatus
+  createdAt: string
 }
 
 export enum OrderStatus {

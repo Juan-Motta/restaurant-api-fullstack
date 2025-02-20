@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import LoginView from '@/presentation/views/LoginView.vue'
-import DashboardViewVue from '@/presentation/views/DashboardView.vue.vue'
+import DashboardViewVue from '@/presentation/views/DashboardView.vue'
 import BuyView from '@/presentation/views/BuyView.vue'
 import OrderView from '@/presentation/views/OrderView.vue'
 import StoreView from '@/presentation/views/StoreView.vue'
@@ -18,37 +18,37 @@ const router = createRouter({
     },
     {
       path: '/take-order',
-      name: 'Take Order',
+      name: 'take-an-order',
       component: DashboardViewVue,
       meta: { title: 'Take an order' },
     },
     {
       path: '/login',
-      name: 'Login',
+      name: 'login',
       component: LoginView,
       meta: { title: 'Login' },
     },
     {
       path: '/buys',
-      name: 'Historical Buys',
+      name: 'historical-buys',
       component: BuyView,
       meta: { title: 'Buys' },
     },
     {
       path: '/orders',
-      name: 'Historical Orders',
+      name: 'historical-orders',
       component: OrderView,
       meta: { title: 'Orders' },
     },
     {
       path: '/storage',
-      name: 'Storage',
+      name: 'storage-items',
       component: StoreView,
       meta: { title: 'Stores' },
     },
     {
       path: '/recipes',
-      name: 'Recipes',
+      name: 'recipes',
       component: RecipesView,
       meta: { title: 'Recipes' },
     },

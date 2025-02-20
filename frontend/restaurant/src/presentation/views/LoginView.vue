@@ -22,8 +22,8 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
-import axios from 'axios';
 import { useRouter } from 'vue-router';
+import { login } from '@/services/login';
 
 const email = ref('');
 const password = ref('');
@@ -31,15 +31,8 @@ const router = useRouter();
 
 const handleLogin = async () => {
   try {
-    const response = await axios.post(`${import.meta.env.VITE_API_URL}/login`, {
-      email: email.value,
-      password: password.value
-    });
-
-    const { accessToken } = response.data;
-
-    localStorage.setItem('jwt', accessToken);
-
+    const response = await login(email.value, password.value);
+    localStorage.setItem('jwt', response.accessToken);
     router.push('/take-order');
   } catch (error) {
     console.error('Login failed:', error);
@@ -47,7 +40,3 @@ const handleLogin = async () => {
   }
 };
 </script>
-
-<style scoped>
-/* Add any additional styles here */
-</style>

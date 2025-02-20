@@ -1,7 +1,11 @@
-import { type Ingredient } from './ingredients'
-
 export interface Recipe {
   id: number
   name: string
-  ingredients: Ingredient[]
+  imageUrl: string
+  ingredients: {
+    id: number
+    name: string
+    quantity: number
+    imageUrl: string
+  }[]
 }

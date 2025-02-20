@@ -19,11 +19,14 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 import { useRoute } from 'vue-router';
+import { useI18n } from 'vue-i18n'
+
+const { t } = useI18n()
 
 const route = useRoute();
 
 const pageName = computed(() => {
-  return route.name || 'Home';
+  return t(String(route.name)) || 'Home';
 });
 
 defineProps({

@@ -6,3 +6,15 @@ export const getCurrentDate = () => {
 
   return `${year}-${month}-${day}`
 }
+
+export const formatDate = (isoDate: string): string => {
+  const options: Intl.DateTimeFormatOptions = {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit',
+    timeZoneName: 'short',
+  }
+  return new Date(isoDate).toLocaleString(undefined, options)
+}

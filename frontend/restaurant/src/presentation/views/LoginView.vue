@@ -1,40 +1,24 @@
 <template>
-  <div class="flex h-full">
-    <div class="w-full md:w-1/2 flex flex-col justify-center px-8 md:px-16 lg:px-24">
+  <div class="flex h-dvh">
+    <div class="w-full h-full md:w-1/2 flex flex-col justify-center px-8 md:px-16 lg:px-24">
       <h1 class="text-3xl font-bold mb-8">Restaurant App</h1>
       <form @submit.prevent="handleLogin" class="space-y-4">
         <div>
-          <input
-            type="email"
-            v-model="email"
-            :placeholder="$t('email')"
-            required
-            autocomplete="email"
-            class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 border-gray-300"
-          />
+          <input type="email" v-model="email" :placeholder="$t('email')" required autocomplete="email"
+            class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 border-gray-300" />
         </div>
         <div>
-          <input
-            type="password"
-            v-model="password"
-            :placeholder="$t('password')"
-            required
+          <input type="password" v-model="password" :placeholder="$t('password')" required
             autocomplete="current-password"
-            class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 border-gray-300"
-          />
+            class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 border-gray-300" />
         </div>
-        <button
-          type="submit"
-          class="w-full bg-[#0eb3a0ca] text-white font-semibold py-2 rounded-md hover:bg-[#67cec2ca] transition duration-300"
-        >
+        <button type="submit"
+          class="w-full bg-[#0eb3a0ca] text-white font-semibold py-2 rounded-md hover:bg-[#67cec2ca] transition duration-300">
           {{ $t('login') }}
         </button>
       </form>
     </div>
-    <div
-      class="md:w-1/2 bg-cover bg-center hidden md:flex"
-      style="background-image: url('/restaurant.webp')"
-    ></div>
+    <div class="md:w-1/2 bg-cover bg-center hidden md:flex" style="background-image: url('/restaurant.webp')"></div>
   </div>
 </template>
 

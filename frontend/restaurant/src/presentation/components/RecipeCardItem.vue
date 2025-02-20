@@ -1,6 +1,6 @@
 <template>
   <div class="bg-white shadow-md rounded-lg flex items-center">
-    <div class="w-1/2 h-70 md:h-full">
+    <div class="w-1/2 h-70 xl:h-full">
       <img :src="imageUrl" alt="Recipe Image" class="object-cover rounded-l-lg h-full" />
     </div>
     <div class="p-4 flex-1">

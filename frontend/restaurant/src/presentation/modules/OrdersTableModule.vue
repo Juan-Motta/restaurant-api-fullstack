@@ -78,7 +78,7 @@ const tableColumns = [
   {
     key: 'createdAt',
     label: 'Date',
-    hidden: false,
+    hidden: true,
     transform: (value: string) => translateDate(value),
   },
   {
@@ -93,16 +93,10 @@ const tableColumns = [
 <template>
   <div class="bg-white/50 py-5 px-5 border-shadow rounded-xl h-full flex flex-col">
     <FilterBarItem @clear="clearFilters" @reload="reload">
-      <input
-        type="text"
-        v-model="idFilter"
-        :placeholder="$t('filter-by-order-id')"
-        class="border w-full rounded-lg py-1 px-2 border-gray-400 placeholder-gray-400 focus:border-[#00d6bcca] focus:outline-none focus:ring-0"
-      />
-      <select
-        v-model="statusFilter"
-        class="border rounded py-1 px-2 border-gray-400 placeholder-gray-400 focus:border-[#00d6bcca] focus:outline-none focus:ring-0"
-      >
+      <input type="text" v-model="idFilter" :placeholder="$t('filter-by-order-id')"
+        class="border w-full rounded-lg py-1 px-2 border-gray-400 placeholder-gray-400 focus:border-[#00d6bcca] focus:outline-none focus:ring-0" />
+      <select v-model="statusFilter"
+        class="border rounded py-1 px-2 border-gray-400 placeholder-gray-400 focus:border-[#00d6bcca] focus:outline-none focus:ring-0">
         <option value="">{{ $t('all-order-statuses') }}</option>
         <option value="PREPARING">{{ $t('order-status-preparing') }}</option>
         <option value="IN_KITCHEN">{{ $t('order-status-in-kitchen') }}</option>
@@ -120,11 +114,7 @@ const tableColumns = [
       <TableItem :columns="tableColumns" :data="orders" />
     </div>
 
-    <PaginatorItem
-      @change-page="changePage"
-      :current-page="currentPage"
-      :items-per-page="itemsPerPage"
-      :total-items="totalItems"
-    />
+    <PaginatorItem @change-page="changePage" :current-page="currentPage" :items-per-page="itemsPerPage"
+      :total-items="totalItems" />
   </div>
 </template>

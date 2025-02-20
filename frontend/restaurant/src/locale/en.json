@@ -66,5 +66,9 @@
   "Date": "Date",
   "Status": "Status",
   "Ingredient Id": "Ingredient Id",
-  "Ingredient Name": "Ingredient Name"
+  "Ingredient Name": "Ingredient Name",
+  "login": "Login",
+  "email": "Email",
+  "password": "Password",
+  "login-failed": "Login failed. Please try again."
 }

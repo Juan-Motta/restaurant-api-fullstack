@@ -67,5 +67,9 @@
   "Date": "Fecha",
   "Status": "Estado",
   "Ingredient Id": "Id de ingrediente",
-  "Ingredient Name": "Nombre de ingrediente"
+  "Ingredient Name": "Nombre de ingrediente",
+  "login": "Iniciar sesión",
+  "email": "Correo electrónico",
+  "password": "Contraseña",
+  "login-failed": "Inicio de sesión fallido, intente nuevamente"
 }

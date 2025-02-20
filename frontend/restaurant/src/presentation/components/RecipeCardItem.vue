@@ -6,7 +6,7 @@
     <div class="p-4 flex-1">
       <h3 class="font-semibold text-lg">{{ $t(name) }}</h3>
       <div>
-        <hr class="border-gray-200 mx-1 my-2">
+        <hr class="border-gray-200 mx-1 my-2" />
         <p v-for="ingredient in ingredients" :key="ingredient.id">
           <span class="font-semibold">{{ ingredient.quantity }}</span> {{ $t(ingredient.name) }}
         </p>
@@ -17,8 +17,8 @@
 
 <script setup lang="ts">
 defineProps<{
-  name: string;
-  imageUrl: string;
-  ingredients: { id: number; name: string; quantity: number, imageUrl: string }[];
+  name: string
+  imageUrl: string
+  ingredients: { id: number; name: string; quantity: number; imageUrl: string }[]
 }>()
 </script>

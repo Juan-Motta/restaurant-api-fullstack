@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import MainLayout from '../layouts/MainLayout.vue';
-import RecipesTableModule from '../modules/RecipesTableModule.vue';
+import MainLayout from '../layouts/MainLayout.vue'
+import RecipesTableModule from '../modules/RecipesTableModule.vue'
 </script>
 
 <template>

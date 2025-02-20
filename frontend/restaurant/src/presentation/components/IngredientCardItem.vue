@@ -5,7 +5,7 @@
     </div>
     <div class="p-4 flex-1 flex flex-col items-center">
       <h3 class="font-semibold text-lg">{{ $t(name) }}</h3>
-      <hr class="border-gray-200 mx-1 my-2 w-full">
+      <hr class="border-gray-200 mx-1 my-2 w-full" />
       <span class="text-3xl font-bold">{{ quantity }}</span>
     </div>
   </div>
@@ -13,8 +13,8 @@
 
 <script setup lang="ts">
 defineProps<{
-  name: string;
-  imageUrl: string;
-  quantity: number;
-}>();
+  name: string
+  imageUrl: string
+  quantity: number
+}>()
 </script>

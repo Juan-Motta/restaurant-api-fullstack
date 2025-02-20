@@ -11,8 +11,8 @@
     <tbody class="text-center">
       <tr v-for="item in data" :key="item.id">
         <td v-for="col in columns" :key="col.key" class="py-2 px-4" :class="{ 'hidden md:table-cell': col.hidden }">
-          <span v-if="col.transform" v-html="col.transform($t(getValueByKey(item, col.key)))"></span>
-          <span v-else>{{ $t(getValueByKey(item, col.key)) }}</span>
+          <span v-if="col.transform" v-html="col.transform(getValueByKey(item, col.key))"></span>
+          <span v-else>{{ col.translate ? $t(getValueByKey(item, col.key)) : getValueByKey(item, col.key) }}</span>
         </td>
       </tr>
     </tbody>
@@ -27,6 +27,7 @@ interface Column {
   hidden?: boolean;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   transform?: (value: any) => string;
+  translate?: boolean;
 }
 
 defineProps<{

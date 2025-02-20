@@ -2,6 +2,7 @@
 import { getAllOrders } from '@/services/orders';
 import { type Order } from '@/types/orders';
 import { ref, onMounted, watch } from 'vue';
+import { useI18n } from 'vue-i18n'
 
 import TableItem from '../components/TableItem.vue';
 import PaginatorItem from '../components/PaginatorItem.vue';
@@ -10,6 +11,7 @@ import FilterBarItem from '../components/FilterBarItem.vue';
 import { getStatusClass } from '@/utils/orders';
 import { formatDate } from '@/utils/date';
 
+const { t } = useI18n()
 const orders = ref<Order[]>([]);
 
 const isLoading = ref(true);
@@ -51,7 +53,12 @@ onMounted(() => {
 
 const formatStatus = (status: string): string => {
   const classValues = getStatusClass(status);
-  return `<span v-html class="${classValues}" class="font-semibold">${status}</span>`
+  return `<span v-html class="${classValues}" class="font-semibold">${t(status)}</span>`
+}
+
+const translateDate = (date: string): string => {
+  const splitedDate = formatDate(date).split(' ');
+  return `${t(splitedDate[0])} ${splitedDate[1]} ${splitedDate[2]} ${t(splitedDate[3])} ${splitedDate[4]} ${splitedDate[5]} ${splitedDate[6]}`
 }
 
 const clearFilters = () => {
@@ -68,8 +75,8 @@ const reload = () => {
 
 const tableColumns = [
   { key: 'id', label: 'Id', hidden: true },
-  { key: 'recipe.name', label: 'Name', hidden: false },
-  { key: 'createdAt', label: 'Date', hidden: false, transform: (value: string) => formatDate(value) },
+  { key: 'recipe.name', label: 'Name', hidden: false, translate: true },
+  { key: 'createdAt', label: 'Date', hidden: false, transform: (value: string) => translateDate(value) },
   { key: 'status', label: 'Status', hidden: false, transform: (value: string) => formatStatus(value) }
 ]
 </script>
@@ -78,14 +85,14 @@ const tableColumns = [
   <div class="bg-white/50 py-5 px-5 border-shadow rounded-xl h-full flex flex-col">
 
     <FilterBarItem @clear="clearFilters" @reload="reload">
-      <input type="text" v-model="idFilter" placeholder="Filter by ID"
+      <input type="text" v-model="idFilter" :placeholder="$t('filter-by-order-id')"
         class="border w-full rounded-lg py-1 px-2 border-gray-400 placeholder-gray-400 focus:border-[#00d6bcca] focus:outline-none focus:ring-0" />
       <select v-model="statusFilter"
         class="border rounded py-1 px-2 border-gray-400 placeholder-gray-400 focus:border-[#00d6bcca] focus:outline-none focus:ring-0">
-        <option value="">All Statuses</option>
-        <option value="PREPARING">Preparing</option>
-        <option value="IN_KITCHEN">In Kitchen</option>
-        <option value="FINISHED">Finished</option>
+        <option value="">{{ $t('all-order-statuses') }}</option>
+        <option value="PREPARING">{{ $t('order-status-preparing') }}</option>
+        <option value="IN_KITCHEN">{{ $t('order-status-in-kitchen') }}</option>
+        <option value="FINISHED">{{ $t('order-status-finished') }}</option>
       </select>
 
     </FilterBarItem>

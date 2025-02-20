@@ -61,9 +61,9 @@ const reload = () => {
 <template>
   <div class="bg-white/50 py-5 px-5 border-shadow rounded-xl h-full flex flex-col">
     <FilterBarItem @clear="clearFilters" @reload="reload">
-      <input type="text" v-model="idIngredientFilter" placeholder="Filter by ingredient ID"
+      <input type="text" v-model="idIngredientFilter" :placeholder="$t('filter-by-ingredient-id')"
         class="border w-full rounded-lg py-1 px-2 border-gray-400 placeholder-gray-400 focus:border-[#00d6bcca] focus:outline-none focus:ring-0" />
-      <input type="text" v-model="idIngredientNameFilter" placeholder="Filter by ingredient name"
+      <input type="text" v-model="idIngredientNameFilter" :placeholder="$t('filter-by-ingredient-name')"
         class="border w-full rounded-lg py-1 px-2 border-gray-400 placeholder-gray-400 focus:border-[#00d6bcca] focus:outline-none focus:ring-0" />
     </FilterBarItem>
 

@@ -92,7 +92,7 @@ const reload = () => {
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
         <div class="bg-white shadow-md rounded-lg flex items-center" v-for="ingredient in ingredients"
           :key="ingredient.id">
-          <div class="w-1/2 h-full">
+          <div class="w-1/2 h-70 md:h-full">
             <img :src="ingredient.imageUrl" alt="Recipe Image" class="object-cover rounded-l-lg h-full" />
           </div>
           <div class="p-4 flex-1 flex flex-col items-center"> <!-- Add padding here instead -->

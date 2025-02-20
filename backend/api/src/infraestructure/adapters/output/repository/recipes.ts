@@ -90,8 +90,8 @@ export class RecipeRepository implements IRecipeRepository {
         }
 
         if (filters.recipeName) {
-            conditions.push(`r.name = $${paramIndex++}`)
-            params.push(filters.recipeName)
+            conditions.push(`r.name ilike $${paramIndex++}`)
+            params.push(`%${filters.recipeName}%`)
         }
 
         if (conditions.length > 0) {

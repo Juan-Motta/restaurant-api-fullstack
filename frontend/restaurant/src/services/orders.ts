@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { type Order } from '@/types/orders'
+import { type Order, type OrderStatusResume } from '@/types/orders'
 
 export const getAllOrders = async (
   page: number,
@@ -29,6 +29,20 @@ export const createOrder = async (): Promise<Order> => {
   const response = await axios.post(
     `${import.meta.env.VITE_API_URL}/orders`,
     {},
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    },
+  )
+
+  return response.data
+}
+
+export const getOrderStatusResume = async (): Promise<OrderStatusResume[]> => {
+  const token = localStorage.getItem('jwt')
+  const response = await axios.get(
+    `${import.meta.env.VITE_API_URL}/orders-resume`,
     {
       headers: {
         Authorization: `Bearer ${token}`,

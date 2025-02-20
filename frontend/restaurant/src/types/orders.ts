@@ -13,3 +13,9 @@ export enum OrderStatus {
   IN_KITCHEN = 'IN_KITCHEN',
   FINISHED = 'FINISHED',
 }
+
+export interface OrderStatusResume {
+  status: string
+  count: number
+  totalCount: number
+}

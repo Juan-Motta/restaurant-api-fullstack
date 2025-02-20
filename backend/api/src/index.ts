@@ -16,6 +16,7 @@ import {
     listAllRecipesController
 } from './infraestructure/adapters/input/api/recipes'
 import { healthCheckController } from './infraestructure/adapters/input/api/common'
+import { getOrdersResumeController } from './infraestructure/adapters/input/api/orders'
 
 const server = new HttpServer()
 
@@ -29,5 +30,7 @@ server.addRoute('/api/v1/ingredients', 'GET', listAllIngredients)
 server.addRoute('/api/v1/buys', 'GET', listAllBuysController)
 server.addRoute('/api/v1/recipes/:id', 'GET', getRecipeController)
 server.addRoute('/api/v1/recipes', 'GET', listAllRecipesController)
+server.addRoute('/api/v1/orders-resume', 'GET', getOrdersResumeController)
+
 
 server.listen(settings.API_PORT)

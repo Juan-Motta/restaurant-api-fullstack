@@ -22,4 +22,8 @@ export class IOrderRepository {
     async updateStatus(id: number, status: OrderStatus): Promise<Order> {
         throw new Error('Method not implemented.')
     }
+
+    async getOrdersResume(): Promise<{status: string, count: number, totalCount: number}[]> {
+        throw new Error('Method not implemented.')
+    }
 }

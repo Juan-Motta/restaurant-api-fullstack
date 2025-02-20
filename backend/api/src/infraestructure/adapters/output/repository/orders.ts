@@ -155,4 +155,28 @@ export class OrderRepository implements IOrderRepository {
             createdAt: res2.rows[0].ordercreatedat
         }
     }
+
+    async getOrdersResume(): Promise<{status: string, count: number, totalCount: number}[]> {
+        const res = await this.client.query(
+            `
+            SELECT
+                status,
+                COUNT(*) AS count,
+                (SELECT COUNT(*) FROM orders) AS total_count
+            FROM
+                orders
+            WHERE
+                status IN ('FINISHED', 'IN_KITCHEN', 'PREPARING')
+            GROUP BY
+                status
+            ORDER BY
+                status;
+            `
+        )
+        return res.rows.map((row) => ({
+            status: row.status,
+            count: parseInt(row.count),
+            totalCount: parseInt(row.total_count)
+        }))
+    }
 }

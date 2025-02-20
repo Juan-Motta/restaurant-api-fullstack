@@ -63,6 +63,17 @@ services:
       interval: 5s
       timeout: 5s
       retries: 20
+  
+  front-app:
+    build:
+      context: ./frontend/restaurant
+      dockerfile: Dockerfile
+    env_file:
+      - ./frontend/restaurant/.env.docker
+    ports:
+      - '4002:80'
+    restart: always
+
 
   rabbitmq:
     image: rabbitmq:management

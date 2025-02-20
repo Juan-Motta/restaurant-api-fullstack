@@ -73,3 +73,21 @@ export async function getOrderController(req: HttpRequest, res: HttpResponse) {
     res.statusCode = 200
     res.end(JSON.stringify(response))
 }
+
+export async function getOrdersResumeController(
+    req: HttpRequest,
+    res: HttpResponse
+) {
+    Logger.info('Get orders resume')
+    const client = await db.connect()
+
+    const authService = await getAuthService(client)
+    await authService.verifyHeader(req)
+
+    const orderService = await getOrderService(client)
+    const response = await orderService.getOrdersResume()
+
+    client.release()
+    res.statusCode = 200
+    res.end(JSON.stringify(response))
+}

@@ -77,4 +77,8 @@ export class OrdersService {
     public async getOrderById(orderId: number) {
         return this.orderRepository.findById(orderId)
     }
+
+    public async getOrdersResume() {
+        return this.orderRepository.getOrdersResume()
+    }
 }

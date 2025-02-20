@@ -10,6 +10,8 @@ RUN pnpm install
 
 COPY . .
 
+RUN [ -f .env ] && [ ! -s .env ] || cp .env.docker .env || true
+
 RUN pnpm run build-only
 
 FROM nginx:alpine

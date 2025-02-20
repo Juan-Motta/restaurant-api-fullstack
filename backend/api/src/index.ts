@@ -15,9 +15,11 @@ import {
     getRecipeController,
     listAllRecipesController
 } from './infraestructure/adapters/input/api/recipes'
+import { healthCheckController } from './infraestructure/adapters/input/api/common'
 
 const server = new HttpServer()
 
+server.addRoute('/', 'GET', healthCheckController)
 server.addRoute('/api/v1/signin', 'POST', registerUserController)
 server.addRoute('/api/v1/login', 'POST', loginController)
 server.addRoute('/api/v1/orders', 'POST', createOrderController)

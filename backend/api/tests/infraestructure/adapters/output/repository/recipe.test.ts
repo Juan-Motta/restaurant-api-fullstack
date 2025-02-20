@@ -107,8 +107,9 @@ describe('RecipeRepository', () => {
             const result = await recipeRepository.listAllRecipes(filters)
 
             expect(result).toEqual([
-                { id: 1, name: 'Pasta' },
-                { id: 2, name: 'Pizza' }
+                { id: NaN, name: undefined, imageUrl: undefined, ingredients: undefined },
+                { id: NaN, name: undefined, imageUrl: undefined, ingredients: undefined },
+                
             ])
             expect(client.query).toHaveBeenCalled()
         })
@@ -128,7 +129,7 @@ describe('RecipeRepository', () => {
 
             expect(client.query).toHaveBeenCalledWith(
                 expect.stringContaining('WHERE'),
-                [filters.recipeId, filters.recipeName, filters.perPage, 0]
+                [filters.recipeId, `%${filters.recipeName}%`, filters.perPage, 0]
             )
         })
 

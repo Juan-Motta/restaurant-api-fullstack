@@ -70,5 +70,17 @@
   "login": "Login",
   "email": "Email",
   "password": "Password",
-  "login-failed": "Login failed. Please try again."
+  "login-failed": "Login failed. Please try again.",
+  "name": "Name",
+  "password-confirmation": "Password confirmation",
+  "create-user": "Create user",
+  "users-registration": "Users registration",
+  "back-to-login": "Back to login",
+  "passwords-must-match": "Passwords must match",
+  "password-must-be-at-least-6-characters": "Password must be at least 6 characters",
+  "invalid-email": "Invalid email",
+  "name-must-be-at-least-3-characters": "Name must be at least 3 characters",
+  "create-failed": "Failed to create user. Please try again.",
+  "creating-user": "Creating user..."
+
 }

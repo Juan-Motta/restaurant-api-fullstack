@@ -71,5 +71,16 @@
   "login": "Iniciar sesión",
   "email": "Correo electrónico",
   "password": "Contraseña",
-  "login-failed": "Inicio de sesión fallido, intente nuevamente"
+  "login-failed": "Inicio de sesión fallido, intente nuevamente",
+  "name": "Nombre",
+  "password-confirmation": "Confirmación de contraseña",
+  "create-user": "Crear usuario",
+  "users-registration": "Registro de usuarios",
+  "back-to-login": "Volver al inicio de sesión",
+  "passwords-must-match": "Las contraseñas deben coincidir",
+  "password-must-be-at-least-6-characters": "La contraseña debe tener al menos 6 caracteres",
+  "invalid-email": "Correo electrónico inválido",
+  "name-must-be-at-least-3-characters": "El nombre debe tener al menos 3 caracteres",
+  "create-failed": "Creación fallida, intente nuevamente",
+  "creating-user": "Creando usuario..."
 }

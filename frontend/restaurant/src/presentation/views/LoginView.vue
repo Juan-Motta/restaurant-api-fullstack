@@ -13,10 +13,14 @@
             class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 border-gray-300" />
         </div>
         <button type="submit"
-          class="w-full bg-[#0eb3a0ca] text-white font-semibold py-2 rounded-md hover:bg-[#67cec2ca] transition duration-300">
+          class="w-full bg-[#0eb3a0ca] text-white font-semibold py-2 rounded-md hover:bg-[#67cec2ca] transition duration-300 cursor-pointer">
           {{ $t('login') }}
         </button>
       </form>
+      <button @click="goCreate"
+          class="w-full bg-gray-300 text-white font-semibold py-2 rounded-md hover:bg-[#67cec2ca] transition duration-300 mt-5 cursor-pointer">
+          {{ $t('create-user') }}
+        </button>
     </div>
     <div class="md:w-1/2 bg-cover bg-center hidden md:flex" style="background-image: url('/restaurant.webp')"></div>
   </div>
@@ -32,6 +36,10 @@ const { t } = useI18n()
 const email = ref('')
 const password = ref('')
 const router = useRouter()
+
+const goCreate = () => {
+  router.push('/signin')
+}
 
 const handleLogin = async () => {
   try {

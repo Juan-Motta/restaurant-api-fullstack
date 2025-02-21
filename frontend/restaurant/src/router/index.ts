@@ -5,6 +5,7 @@ import BuyView from '@/presentation/views/BuyView.vue'
 import OrderView from '@/presentation/views/OrderView.vue'
 import StoreView from '@/presentation/views/StoreView.vue'
 import RecipesView from '@/presentation/views/RecipesView.vue'
+import CreateUserView from '@/presentation/views/CreateUserView.vue'
 import NotFoundView from '@/presentation/views/NotFoundView.vue'
 import { jwtDecode } from 'jwt-decode'
 import { useUserStore } from '@/stores/user'
@@ -15,6 +16,12 @@ const router = createRouter({
     {
       path: '/',
       redirect: '/login',
+    },
+    {
+      path: '/signin',
+      name: 'signin',
+      component: CreateUserView,
+      meta: { title: 'Create User' },
     },
     {
       path: '/take-order',
@@ -83,7 +90,7 @@ router.beforeEach((to, from, next) => {
     }
   }
   const isAuthenticated = jwtToken && isTokenValid(jwtToken)
-  if (to.path === '/login') {
+  if (to.path === '/login' || to.path === '/signin') {
     if (isAuthenticated) {
       next({ path: '/take-order' })
     } else {

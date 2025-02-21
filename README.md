@@ -17,7 +17,14 @@ cualquiera de estas funcionalidades de manera sencilla como se explica mas adela
 * password: abcd1234
 * url: https://restaurantapp.juanandresdeveloper.com/login
 
+![image](https://github.com/user-attachments/assets/02098252-1f80-48e4-ae66-f6ba9b677861)
+
+![image](https://github.com/user-attachments/assets/adad6d45-a209-4e9e-9608-3e33859c6f0d)
+
+
 ## Arquitectura del proyecto
+
+![image](https://github.com/user-attachments/assets/adad721d-3c16-4169-aff4-cbcf82bbb313)
 
 El proyecto se compone de siete servicios, todos implementados con Docker y orquestados mediante Docker Compose. Los servicios son:
 
@@ -38,6 +45,8 @@ Los proyectos de backend estan basados en una arquitectura hexagonal la cual per
 * infraestructura
 * aplicacion
 * dominio
+
+![image](https://github.com/user-attachments/assets/f3646cac-f30b-4707-913b-6c963097aa83)
 
 En donde toda la logica de negocio esta contenida en la capa de aplicacion y dominio y las configuraciones externas en la capa de infrestructura, esto permite poder realizar cambios o migraciones de tecnologias reduciendo el esfuerzo y la complejidas del cambio.
 
@@ -70,9 +79,17 @@ docker-compose up --build
 #### En docker no es necesario configurar variables de entorno
 Las variables de entorno estan configuradas para que el proyecto funcione sin realizar configuraciones extras, estas variables son **.env.docker**
 
+## Base de datos
+
+![image](https://github.com/user-attachments/assets/516e846b-9385-481f-a874-609df0e3cb7a)
+
 ## Servicios adicionales
 
 ### Conexión con base de datos
+
+![image](https://github.com/user-attachments/assets/be2c179b-ffdf-4f05-9e28-8a5e19d51696)
+
+![image](https://github.com/user-attachments/assets/6c84bf97-acac-459b-a576-4826e7f32973)
 
 Para realizar la conexión con la base de datos se dispone del servicio Adminer el cual se puede acceder desde `http://localhost:4001` mediante las siguientes credenciales por defecto
 
@@ -83,6 +100,10 @@ Para realizar la conexión con la base de datos se dispone del servicio Adminer 
 
 
 ### Conexion Admin RabbitMQ
+
+![image](https://github.com/user-attachments/assets/c0d35793-528e-4044-8df1-220913d2ffc4)
+
+![image](https://github.com/user-attachments/assets/d81145b8-475c-4c1e-afe1-6ac836198a7c)
 
 Para entrar al panel de administración de rabbitmq se puede acceder desde `http://localhost:15671` con las credenciales
 
@@ -95,3 +116,9 @@ Estos servicios se pueden editar directamente el el archivo **docker-compose.yml
 ## Pruebas unitarias
 
 Las pruebas unitarias se diseñaron para cumplir un requisito de mas del **90%**, el cual se puede lograr gracias a la arquitectura del proyecto
+
+![image](https://github.com/user-attachments/assets/b60c109d-50a6-44e1-aa2f-55488563dc58)
+
+![image](https://github.com/user-attachments/assets/f639b9e8-2229-46c2-8547-0cc4149f1fa2)
+
+![image](https://github.com/user-attachments/assets/6056515c-6069-48e0-ab01-6f65277ef0e4)

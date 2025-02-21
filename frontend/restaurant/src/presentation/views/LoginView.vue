@@ -22,7 +22,7 @@
           {{ $t('create-user') }}
         </button>
     </div>
-    <div class="md:w-1/2 bg-cover bg-center hidden md:flex" style="background-image: url('/restaurant.webp')"></div>
+    <v-lazy-image class="md:w-1/2 bg-cover bg-center hidden md:flex" src="/restaurant.webp" src-placeholder="/restaurant_min.webp" />
   </div>
 </template>
 
@@ -31,6 +31,7 @@ import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { login } from '@/services/login'
 import { useI18n } from 'vue-i18n'
+import VLazyImage from "v-lazy-image";
 const { t } = useI18n()
 
 const email = ref('')
@@ -52,3 +53,14 @@ const handleLogin = async () => {
   }
 }
 </script>
+
+<style scoped>
+.v-lazy-image {
+  filter: blur(5px);
+  transition: filter 1.6s;
+  will-change: filter;
+}
+.v-lazy-image-loaded {
+  filter: blur(0);
+}
+</style>

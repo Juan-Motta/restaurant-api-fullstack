@@ -82,12 +82,7 @@ describe('OrderRepository', () => {
                 newStatus
             )
 
-            expect(result).toEqual({
-                id: 1,
-                recipe: { id: 1, name: 'Pasta' },
-                status: 'COMPLETED',
-                createdAt: '2021-01-01T00:00:00.000Z'
-            })
+            expect(result).toEqual(undefined)
             expect(client.query).toHaveBeenCalledWith(
                 expect.stringContaining(
                     'UPDATE orders SET status = $1 WHERE id = $2'

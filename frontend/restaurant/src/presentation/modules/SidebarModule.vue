@@ -1,7 +1,7 @@
 <template>
   <aside
     :class="[
-      'flex flex-col bg-white w-64 fixed h-full transition-transform duration-300 ease-in-out md:translate-x-0',
+      'flex flex-col bg-white w-64 fixed h-full transition-transform duration-300 ease-in-out md:translate-x-0 z-50',
       { 'translate-x-0': isSidebarOpen, '-translate-x-full': !isSidebarOpen },
     ]"
   >

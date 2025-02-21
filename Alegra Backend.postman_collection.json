@@ -1,0 +1,346 @@
+{
+	"info": {
+		"_postman_id": "21eac928-5522-4b4e-ae1b-a559ecf34464",
+		"name": "Alegra Backend",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "14925764"
+	},
+	"item": [
+		{
+			"name": "create user",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"Juan1\",\n    \"email\": \"juan4@example.com\",\n    \"password\": \"abcd1234\",\n    \"confirmPassword\": \"abcd1234\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:4003/api/v1/signin",
+					"host": [
+						"localhost"
+					],
+					"port": "4003",
+					"path": [
+						"api",
+						"v1",
+						"signin"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"jhon@example.com\",\n    \"password\": \"abcd1234\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:4003/api/v1/login",
+					"host": [
+						"localhost"
+					],
+					"port": "4003",
+					"path": [
+						"api",
+						"v1",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "list all orders",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsInVzZXJFbWFpbCI6Impob25AZXhhbXBsZS5jb20iLCJ1c2VyTmFtZSI6Ikpob24gRG9lIiwiaWF0IjoxNzM5ODk3OTQxLCJleHAiOjE3Mzk5MDE1NDF9.jH8_q2D5F1m3-WcVpCQyvibl0XZAFZilqXsRUymy74c",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:4003/api/v1/orders?page=1&perPage=20",
+					"host": [
+						"localhost"
+					],
+					"port": "4003",
+					"path": [
+						"api",
+						"v1",
+						"orders"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "1"
+						},
+						{
+							"key": "perPage",
+							"value": "20"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get order by id",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjMsInVzZXJFbWFpbCI6Imp1YW4yQGV4YW1wbGUuY29tIiwidXNlck5hbWUiOiJKdWFuMSIsImlhdCI6MTczOTg0NzMxOSwiZXhwIjoxNzM5ODUwOTE5fQ.sWq3HsTh2KYvcTtNg1HusjY-EvbBRiTvTK3UCyzUV5g",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:4003/api/v1/orders/1",
+					"host": [
+						"localhost"
+					],
+					"port": "4003",
+					"path": [
+						"api",
+						"v1",
+						"orders",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create order",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjMsInVzZXJFbWFpbCI6Imp1YW4yQGV4YW1wbGUuY29tIiwidXNlck5hbWUiOiJKdWFuMSIsImlhdCI6MTczOTgyODI5NSwiZXhwIjoxNzM5ODMxODk1fQ.lqrYjkqJBV5nBZGqGwXA4tHgwttnA7lC9kVZq4PgBo8",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "localhost:3000/orders",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"orders"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "buy ingredients",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://recruitment.alegra.com/api/farmers-market/buy?ingredient=tomato",
+					"protocol": "https",
+					"host": [
+						"recruitment",
+						"alegra",
+						"com"
+					],
+					"path": [
+						"api",
+						"farmers-market",
+						"buy"
+					],
+					"query": [
+						{
+							"key": "ingredient",
+							"value": "tomato"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "list all ingredients",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsInVzZXJFbWFpbCI6Impob25AZXhhbXBsZS5jb20iLCJ1c2VyTmFtZSI6Ikpob24gRG9lIiwiaWF0IjoxNzM5OTgwNDM2LCJleHAiOjE3Mzk5ODQwMzZ9.Q4tWExmJEtJuIbz2kIPSPt8Vyu3orlqVTY0yGp-7Ymk",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:4003/api/v1/ingredients",
+					"host": [
+						"localhost"
+					],
+					"port": "4003",
+					"path": [
+						"api",
+						"v1",
+						"ingredients"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "list all buys",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsInVzZXJFbWFpbCI6Impob25AZXhhbXBsZS5jb20iLCJ1c2VyTmFtZSI6Ikpob24gRG9lIiwiaWF0IjoxNzM5OTgwNDM2LCJleHAiOjE3Mzk5ODQwMzZ9.Q4tWExmJEtJuIbz2kIPSPt8Vyu3orlqVTY0yGp-7Ymk",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:4003/api/v1/buys",
+					"host": [
+						"localhost"
+					],
+					"port": "4003",
+					"path": [
+						"api",
+						"v1",
+						"buys"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get recipe by id",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsInVzZXJFbWFpbCI6Impob25AZXhhbXBsZS5jb20iLCJ1c2VyTmFtZSI6Ikpob24gRG9lIiwiaWF0IjoxNzM5OTgwNDM2LCJleHAiOjE3Mzk5ODQwMzZ9.Q4tWExmJEtJuIbz2kIPSPt8Vyu3orlqVTY0yGp-7Ymk",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:4003/api/v1/recipes/1",
+					"host": [
+						"localhost"
+					],
+					"port": "4003",
+					"path": [
+						"api",
+						"v1",
+						"recipes",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "list all recipes",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsInVzZXJFbWFpbCI6Impob25AZXhhbXBsZS5jb20iLCJ1c2VyTmFtZSI6Ikpob24gRG9lIiwiaWF0IjoxNzM5OTgwNDM2LCJleHAiOjE3Mzk5ODQwMzZ9.Q4tWExmJEtJuIbz2kIPSPt8Vyu3orlqVTY0yGp-7Ymk",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:4003/api/v1/recipes",
+					"host": [
+						"localhost"
+					],
+					"port": "4003",
+					"path": [
+						"api",
+						"v1",
+						"recipes"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get orders resume",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjMsInVzZXJFbWFpbCI6Imp1YW4yQGV4YW1wbGUuY29tIiwidXNlck5hbWUiOiJKdWFuMSIsImlhdCI6MTczOTgzMzk4MiwiZXhwIjoxNzM5ODM3NTgyfQ.jBMDE5Y0QuXKaWz5HOwJMzfCf12j5cOt4mY9gzqe300",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:4001/api/v1/orders-resume",
+					"host": [
+						"localhost"
+					],
+					"port": "4001",
+					"path": [
+						"api",
+						"v1",
+						"orders-resume"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

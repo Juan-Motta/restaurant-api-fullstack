@@ -21,6 +21,11 @@ cualquiera de estas funcionalidades de manera sencilla como se explica mas adela
 
 ![image](https://github.com/user-attachments/assets/adad6d45-a209-4e9e-9608-3e33859c6f0d)
 
+## Conexiones por defecto en local con docker compose
+
+* Front: https://localhost:4002
+* Back: http://localhost:4003
+* Db adminer: http://localhost:4001
 
 ## Arquitectura del proyecto
 

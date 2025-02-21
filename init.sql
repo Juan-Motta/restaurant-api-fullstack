@@ -68,27 +68,27 @@ CREATE TABLE IF NOT EXISTS buys
 );
 
 INSERT INTO recipes (id, name, image_url) VALUES
-    (1, 'Cheesy Chicken and Rice Casserole', '/cheesy_chicken_and_rice_casserole_min.webp'),
-    (2, 'Tomato and Onion Stuffed Potatoes', '/tomato_and_onion_stuffed_potatoes_min.webp'),
-    (3, 'Lemon Herb Grilled Chicken Salad', '/lemon_herb_grilled_chicken_salad_min.webp'),
-    (4, 'Ketchup Glazed Meatballs with Rice', '/ketchup_glazed_meatballs_with_rice_min.webp'),
-    (5, 'Chicken and Rice Skillet with Lemon and Tomato', '/chicken_and_rice_skillet_with_lemon_and_tomato_min.webp'),
-    (6, 'Lettuce Wraps with Spiced Meat and Ketchup', '/lettuce_wraps_with_spiced_meat_and_ketchup_min.webp')
+    (1, 'Cheesy Chicken and Rice Casserole', '/cheesy_chicken_and_rice_casserole.webp'),
+    (2, 'Tomato and Onion Stuffed Potatoes', '/tomato_and_onion_stuffed_potatoes.webp'),
+    (3, 'Lemon Herb Grilled Chicken Salad', '/lemon_herb_grilled_chicken_salad.webp'),
+    (4, 'Ketchup Glazed Meatballs with Rice', '/ketchup_glazed_meatballs_with_rice.webp'),
+    (5, 'Chicken and Rice Skillet with Lemon and Tomato', '/chicken_and_rice_skillet_with_lemon_and_tomato.webp'),
+    (6, 'Lettuce Wraps with Spiced Meat and Ketchup', '/lettuce_wraps_with_spiced_meat_and_ketchup.webp')
 ON CONFLICT DO NOTHING;
 
 ALTER SEQUENCE recipes_id_seq RESTART WITH 7;
 
 INSERT INTO ingredients (id, name, image_url) VALUES
-    (1, 'tomato', '/tomato_min.webp'),
-    (2, 'lemon', '/lemon_min.webp'),
-    (3, 'potato', '/potato_min.webp'),
-    (4, 'rice', '/rice_min.webp'),
-    (5, 'ketchup', '/ketchup_min.webp'),
-    (6, 'lettuce', '/lettuce_min.webp'),
-    (7, 'onion', '/onion_min.webp'),
-    (8, 'cheese', '/cheese_min.webp'),
-    (9, 'meat', '/meat_min.webp'),
-    (10, 'chicken', '/chicken_min.webp')
+    (1, 'tomato', '/tomato.webp'),
+    (2, 'lemon', '/lemon.webp'),
+    (3, 'potato', '/potato.webp'),
+    (4, 'rice', '/rice.webp'),
+    (5, 'ketchup', '/ketchup.webp'),
+    (6, 'lettuce', '/lettuce.webp'),
+    (7, 'onion', '/onion.webp'),
+    (8, 'cheese', '/cheese.webp'),
+    (9, 'meat', '/meat.webp'),
+    (10, 'chicken', '/chicken.webp')
 ON CONFLICT DO NOTHING;
 
 ALTER SEQUENCE ingredients_id_seq RESTART WITH 11;

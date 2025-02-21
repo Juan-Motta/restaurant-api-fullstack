@@ -31,7 +31,7 @@
           {{ $t('back-to-login') }}
         </button>
     </div>
-    <div class="md:w-1/2 bg-cover bg-center hidden md:flex" style="background-image: url('/restaurant.webp')"></div>
+    <v-lazy-image class="md:w-1/2 bg-cover bg-center hidden md:flex" src="/restaurant.webp" src-placeholder="/restaurant_min.webp" />
   </div>
 </template>
 
@@ -40,6 +40,7 @@ import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { registerUser } from '@/services/login'
 import { useI18n } from 'vue-i18n'
+import VLazyImage from "v-lazy-image";
 
 const { t } = useI18n()
 

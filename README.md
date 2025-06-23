@@ -15,7 +15,6 @@ cualquiera de estas funcionalidades de manera sencilla como se explica mas adela
 ### Usuario de pruebas frontend
 * email: jhon@example.com
 * password: abcd1234
-* url: https://restaurantapp.juanandresdeveloper.com/login
 
 ![image](https://github.com/user-attachments/assets/02098252-1f80-48e4-ae66-f6ba9b677861)
 
